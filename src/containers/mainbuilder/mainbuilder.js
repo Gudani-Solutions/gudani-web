@@ -36,7 +36,7 @@ class mainbuilder extends Component {
 
     render() {
         return (
-            !this.state.isAuthenticated ?
+            this.state.isAuthenticated ?
                 <Switch>
                     <Route path="/courses" component={Courses} />
                     <Route path="/assessments" component={Assessments} />
@@ -46,8 +46,8 @@ class mainbuilder extends Component {
                 </Switch>
                 :
                 <Switch>
-                    <Route path="/register" component={Register} />
                     <Route path="/login" component={Login} />
+                    <Route path="/register" component={Register} />
                     <Route path="/" component={Login} />
                 </Switch>
         );

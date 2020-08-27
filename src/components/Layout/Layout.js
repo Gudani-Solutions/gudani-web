@@ -12,7 +12,7 @@ class layout extends Component {
         return (
             <Aux>
                 {
-                    !this.props.isAuthenticated ?
+                    this.props.isAuthenticated ?
                         <main>
                             <div id="wrapper">
                                 {this.props.sidebar ? <Sidebar /> : null}

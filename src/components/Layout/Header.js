@@ -3,6 +3,10 @@ import { withRouter } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 import { Dropdown, DropdownToggle, DropdownMenu, DropdownItem } from 'reactstrap';
 import { Scrollbars } from 'react-custom-scrollbars';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux'
+import { signOut } from '../../store/actions/user'
+import moment from 'moment'
 
 class header extends Component {
     constructor(props) {
@@ -86,7 +90,7 @@ class header extends Component {
                                 </DropdownToggle>
                                 <DropdownMenu>
                                     <DropdownItem><i className="mdi mdi-account-circle m-r-5"></i> Profile</DropdownItem>
-                                    <DropdownItem><i className="mdi mdi-power text-danger"></i> Logout</DropdownItem>
+                                    <DropdownItem onClick={() => this.props.signOut()}><i className="mdi mdi-power text-danger"></i> Logout</DropdownItem>
                                 </DropdownMenu>
                             </Dropdown>
                         </li>
@@ -100,4 +104,14 @@ class header extends Component {
     }
 }
 
-export default withRouter(header);
+const mapStatetoProps = state => {
+    return {
+        user: state.user,
+    };
+}
+
+const mapDispatchToProps = (dispatch) => {
+    return bindActionCreators({ signOut }, dispatch)
+}
+
+export default withRouter(connect(mapStatetoProps, mapDispatchToProps)(header));

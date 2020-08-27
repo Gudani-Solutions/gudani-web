@@ -2,7 +2,8 @@ import React, { Component } from 'react';
 import AUX from '../../../hoc/Aux_';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
-import * as actionTypes from '../../../store/action';
+import { bindActionCreators } from 'redux'
+import * as actions from '../../../store/actions/user';
 
 class Register extends Component {
 
@@ -125,6 +126,8 @@ class Register extends Component {
                 this.setState({ pwd_err: 'Required Field' });
             if (this.state.pwd1 === '')
                 this.setState({ pwd1_err: 'Required Field' });
+
+            this.props.register(this.state)
         } catch (e) {
             console.log(e.message)
         }
@@ -260,15 +263,8 @@ class Register extends Component {
 
 const mapStatetoProps = state => {
     return {
-        loginpage: state.ui.loginpage
+        loginpage: state.ui.loginpage,
     };
 }
 
-const mapDispatchtoProps = dispatch => {
-    return {
-        UpdateLogin: () => dispatch({ type: actionTypes.LOGINPAGE, value: true }),
-        UpdateLoginAgain: () => dispatch({ type: actionTypes.LOGINPAGE, value: false })
-    };
-}
-
-export default connect(mapStatetoProps, mapDispatchtoProps)(Register);
+export default connect(mapStatetoProps, actions)(Register);
