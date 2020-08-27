@@ -51,6 +51,7 @@ export const login = (formData) => {
                     user.isAuthenticated = true
                     user.usNewuser = false
                     await dispatch({ type: 'UPDATE_USER', payload: user })
+                    return true
                 } else {
                     // user does not exist in database
                     return false

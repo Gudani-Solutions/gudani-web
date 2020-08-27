@@ -89,7 +89,7 @@ class header extends Component {
                                     <img src="assets/images/avatar.png" alt="user" className="rounded-circle" />
                                 </DropdownToggle>
                                 <DropdownMenu>
-                                    <DropdownItem><i className="mdi mdi-account-circle m-r-5"></i> Profile</DropdownItem>
+                                    <DropdownItem onClick={() => this.props.history.push('/profile')}><i className="mdi mdi-account-circle m-r-5"></i> Profile</DropdownItem>
                                     <DropdownItem onClick={() => this.props.signOut()}><i className="mdi mdi-power text-danger"></i> Logout</DropdownItem>
                                 </DropdownMenu>
                             </Dropdown>

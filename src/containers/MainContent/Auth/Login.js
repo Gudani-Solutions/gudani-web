@@ -11,6 +11,8 @@ class Login extends Component {
         email_err: '',
         pwd: '',
         pwd_err: '',
+        userMessage: 'Sign in to continue to Gudani',
+        loginError: false
     }
 
     componentDidMount() {
@@ -42,7 +44,7 @@ class Login extends Component {
     }
 
 
-    handleSubmit = (e) => {
+    handleSubmit = async (e) => {
         try {
             e.preventDefault()
 
@@ -51,7 +53,11 @@ class Login extends Component {
             if (this.state.pwd === '')
                 this.setState({ pwd_err: 'Required Field' });
 
-            this.props.login(this.state)
+            if (await this.props.login(this.state)) {
+                this.setState({ userMessage: 'Sign in to continue to Gudani', loginError: false });
+            } else {
+                this.setState({ userMessage: 'Login failed. Please try again', loginError: true });
+            }
         } catch (e) {
             console.log(e.message)
         }
@@ -72,7 +78,7 @@ class Login extends Component {
 
                             <div className="p-3">
                                 <h4 className="font-18 m-b-5 text-center">Welcome Back !</h4>
-                                <p className="text-muted text-center">Sign in to continue to Gudani</p>
+                                <p style={{ color: this.state.loginError ? 'red' : 'gray' }} className=" text-center">{this.state.userMessage}</p>
 
                                 <form className="form-horizontal m-t-30" action="/">
 
