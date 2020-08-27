@@ -7,7 +7,7 @@ import { withRouter } from 'react-router-dom';
 import { } from '../../../store/actions/user'
 
 
-class Home extends Component {
+class Courses extends Component {
 
     state = {
         
@@ -35,8 +35,8 @@ class Home extends Component {
             <AUX>
                 <div className="page-content-wrapper">
                     <div className="container-fluid">
-                    <h1>Home Page</h1>
-                        
+
+                    <h1>Courses Page</h1>
                     </div>
                 </div >
             </AUX >
@@ -54,4 +54,4 @@ const mapDispatchToProps = (dispatch) => {
     return bindActionCreators({  }, dispatch)
 }
 
-export default withRouter(connect(mapStatetoProps, mapDispatchToProps)(Home));
+export default withRouter(connect(mapStatetoProps, mapDispatchToProps)(Courses));

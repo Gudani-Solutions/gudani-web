@@ -6,12 +6,27 @@ import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import AUX from './hoc/Aux_';
 import * as actions from './store/actions/index'
+import { database } from './config/firebase'
+import firebase from 'firebase'
 
 class App extends Component {
 
+  state = {
+    isAuthenticated: false
+  }
+
   componentWillMount = async () => {
     try {
-      await this.props.sync()
+
+      firebase.auth().onAuthStateChanged((user) => {
+        if (user) {
+          this.setState({ isAuthenticated: true })
+        } else {
+          this.setState({ isAuthenticated: false })
+        }
+      })
+
+
     } catch (e) {
       console.log(e.message)
     }
@@ -21,7 +36,7 @@ class App extends Component {
     let layout = null;
 
     layout = (
-      <Layout user={this.props.user} header={this.props.header} sidebar={this.props.sidebar} footer={this.props.footer} loginpage={this.props.loginpage}>
+      <Layout isAuthenticated={this.state.isAuthenticated} user={this.props.user} header={this.props.header} sidebar={this.props.sidebar} footer={this.props.footer} loginpage={this.props.loginpage}>
         <Switch>
           <Route path="/" component={mainbuilder} />
         </Switch>

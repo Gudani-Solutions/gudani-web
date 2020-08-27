@@ -7,36 +7,36 @@ import { withRouter } from 'react-router-dom';
 import { } from '../../../store/actions/user'
 
 
-class Home extends Component {
+class Profile extends Component {
 
     state = {
-        
+
     }
 
     dataValidation = () => {
         try {
-            
+
         } catch (e) {
             console.log(e.message)
         }
     }
-   
+
     componentWillMount = async () => {
         try {
-           
+
         } catch (e) {
             console.log(e.message)
         }
     }
 
     render() {
-       
+
         return (
             <AUX>
                 <div className="page-content-wrapper">
                     <div className="container-fluid">
-                    <h1>Home Page</h1>
-                        
+                        <h1>Profile Page</h1>
+
                     </div>
                 </div >
             </AUX >
@@ -51,7 +51,7 @@ const mapStatetoProps = state => {
 }
 
 const mapDispatchToProps = (dispatch) => {
-    return bindActionCreators({  }, dispatch)
+    return bindActionCreators({}, dispatch)
 }
 
-export default withRouter(connect(mapStatetoProps, mapDispatchToProps)(Home));
+export default withRouter(connect(mapStatetoProps, mapDispatchToProps)(Profile));

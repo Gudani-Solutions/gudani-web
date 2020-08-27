@@ -3,11 +3,19 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux'
 import { Route, Switch } from 'react-router-dom';
 
+// Auth Pages
 import Login from '../MainContent/Auth/Login';
 import Register from '../MainContent/Auth/Register';
 
-import Home from '../MainContent/Main/Home.js';
+// User Pages
+import Profile from '../MainContent/User/Profile';
 
+// Main Pages
+import Home from '../MainContent/Main/Home.js';
+import Courses from '../MainContent/Main/Courses.js';
+import Assessments from '../MainContent/Main/Assessments.js';
+
+import { database } from '../../config/firebase'
 import firebase from 'firebase'
 
 class mainbuilder extends Component {
@@ -17,7 +25,6 @@ class mainbuilder extends Component {
     }
 
     componentWillMount = async () => {
-        // console.log(this.props.user)
         firebase.auth().onAuthStateChanged((user) => {
             if (user) {
                 this.setState({ isAuthenticated: true })
@@ -29,8 +36,12 @@ class mainbuilder extends Component {
 
     render() {
         return (
-            this.state.isAuthenticated ?
+            !this.state.isAuthenticated ?
                 <Switch>
+                    <Route path="/courses" component={Courses} />
+                    <Route path="/assessments" component={Assessments} />
+                    <Route path="/profile" component={Profile} />
+                    <Route path="/home" component={Home} />
                     <Route path="/" component={Home} />
                 </Switch>
                 :
