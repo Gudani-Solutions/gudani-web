@@ -5,8 +5,10 @@ const env = {
     projectId: "gudani-eb9cc",
     storageBucket: "gudani-eb9cc.appspot.com",
     messagingSenderId: "624503516237",
-    appId: "1:624503516237:web:2a03df9a898c849f560004",
-    measurementId: "G-H6GSM8TBGJ"
+    appId: "1:624503516237:web:bfd04ae8d0d2c402560004",
+    measurementId: "G-WFMDPYRPGY"
 }
+
+
 
 export default env

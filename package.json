@@ -1,7 +1,7 @@
 {
-  "name": "ghea-dashboard",
+  "name": "gudani",
   "version": "0.0.1",
-  "private": true,
+  "homepage": ".",
   "dependencies": {
     "@babel/core": "7.1.0",
     "@svgr/webpack": "2.4.1",

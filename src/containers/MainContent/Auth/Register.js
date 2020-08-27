@@ -27,12 +27,12 @@ class Register extends Component {
     }
 
     componentDidMount() {
-        if (this.props.loginpage === false) {
-            this.props.UpdateLogin();
-        }
-        window.onpopstate = (e) => {
-            this.props.UpdateLoginAgain();
-        }
+        // if (this.props.loginpage === false) {
+        //     this.props.UpdateLogin();
+        // }
+        // window.onpopstate = (e) => {
+        //     this.props.UpdateLoginAgain();
+        // }
     }
 
     handleChangeFirstName = (e) => {
