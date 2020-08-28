@@ -86,7 +86,9 @@ class header extends Component {
                         <li className="list-inline-item dropdown notification-list">
                             <Dropdown isOpen={this.state.dropdownOpenprofile} toggle={this.toggleprofile}>
                                 <DropdownToggle className="nav-link dropdown-toggle droptest arrow-none waves-effect nav-user" tag="a">
-                                    <img src="assets/images/avatar.png" alt="user" className="rounded-circle" />
+                                    <span>{this.props.user.firstname} {this.props.user.lastname}</span>
+                                    <img style={{ marginLeft: 5 }} src="assets/images/avatar.png" alt="user" className="rounded-circle" />
+
                                 </DropdownToggle>
                                 <DropdownMenu>
                                     <DropdownItem onClick={() => this.props.history.push('/profile')}><i className="mdi mdi-account-circle m-r-5"></i> Profile</DropdownItem>

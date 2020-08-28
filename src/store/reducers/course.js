@@ -1,16 +1,14 @@
 let initialState = {
     uid: '',
-    firstname: '',
-    lastname: '',
-    email: '',
-    role: '',
+    code: '',
+    title: '',
+    description: '',
+    duration: '',
     photo: '',
     univerisity: '',
-    courses: [],
     assessments: [],
-    isVerified: false,
-    isAuthenticated: false,
     token: '',
+    courses: []
 }
 
 export default (state = initialState, action) => {
@@ -19,7 +17,7 @@ export default (state = initialState, action) => {
             return { ...state, courses: action.payload }
         case 'UPDATE_ASSESSMENTS':
             return { ...state, assessments: action.payload }
-        case 'UPDATE_USER':
+        case 'UPDATE_COURSE':
             return action.payload
         default:
             return state
