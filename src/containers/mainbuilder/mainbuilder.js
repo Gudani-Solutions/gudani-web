@@ -6,6 +6,7 @@ import { Route, Switch } from 'react-router-dom';
 // Auth Pages
 import Login from '../MainContent/Auth/Login';
 import Register from '../MainContent/Auth/Register';
+import PasswordReset from '../MainContent/Auth/PasswordReset';
 
 // User Pages
 import Profile from '../MainContent/User/Profile';
@@ -46,6 +47,7 @@ class mainbuilder extends Component {
                 </Switch>
                 :
                 <Switch>
+                    <Route path="/reset" component={PasswordReset} />
                     <Route path="/login" component={Login} />
                     <Route path="/register" component={Register} />
                     <Route path="/" component={Login} />

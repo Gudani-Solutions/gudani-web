@@ -4,19 +4,17 @@ import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import * as actions from '../../../store/actions/user';
 
-class Login extends Component {
+class PasswordReset extends Component {
 
     state = {
         email: '',
         email_err: '',
-        pwd: '',
-        pwd_err: '',
-        userMessage: 'Sign in to continue to Gudani',
-        loginError: false
+        userMessage: 'Enter your Email and instructions will be sent to you.',
+        resetError: false
     }
 
     componentDidMount() {
-        
+
     }
 
     handleChangeEmail = (e) => {
@@ -30,28 +28,18 @@ class Login extends Component {
             this.setState({ email_err: 'Enter Valid Email' });
     }
 
-    handleChangePwd = (e) => {
-        this.setState({ pwd: e.target.value });
-        if (e.target.value === '')
-            this.setState({ pwd_err: 'Required Field' });
-        else
-            this.setState({ pwd_err: '' });
-    }
-
-
     handleSubmit = async (e) => {
         try {
             e.preventDefault()
 
             if (this.state.email === '')
                 this.setState({ email_err: 'Required Field' });
-            if (this.state.pwd === '')
-                this.setState({ pwd_err: 'Required Field' });
 
-            if (await this.props.login(this.state)) {
-                this.setState({ userMessage: 'Sign in to continue to Gudani', loginError: false });
+            if (await this.props.resetPassword(this.state.email)) {
+                this.setState({ userMessage: 'Enter your Email and instructions will be sent to you.', resetError: false });
+                this.props.history.push('/login')
             } else {
-                this.setState({ userMessage: 'Login failed. Please try again', loginError: true });
+                this.setState({ userMessage: 'Reset failed. Please try again', resetError: true });
             }
         } catch (e) {
             console.log(e.message)
@@ -72,8 +60,8 @@ class Login extends Component {
                             </h3>
 
                             <div className="p-3">
-                                <h4 className="font-18 m-b-5 text-center">Welcome Back !</h4>
-                                <p style={{ color: this.state.loginError ? 'red' : 'gray' }} className=" text-center">{this.state.userMessage}</p>
+                                <h4 className="font-18 m-b-5 text-center">Reset Password</h4>
+                                <p style={{ color: this.state.resetError ? 'red' : 'gray' }} className=" text-center">{this.state.userMessage}</p>
 
                                 <form className="form-horizontal m-t-30" action="/">
 
@@ -85,32 +73,19 @@ class Login extends Component {
                                         </div>
                                     </div>
 
-                                    <div className="form-group">
-                                        <label>Password</label>
-                                        <div>
-                                            <input style={{ borderColor: this.state.pwd_err ? 'red' : null }} type="password" value={this.state.pwd} onChange={this.handleChangePwd} className="form-control" placeholder="Password" />
-                                            <span style={{ color: 'red' }} id="err">{this.state.pwd_err}</span>
-                                        </div>
-                                    </div>
-
                                     <div className="form-group row m-t-20">
                                         <div className="col-12 text-center">
-                                            <button onClick={this.handleSubmit} style={{ backgroundColor: '#089BD1', width: '100%' }} className="btn btn-primary w-md waves-effect waves-light" type="submit">Log In</button>
+                                            <button onClick={this.handleSubmit} style={{ backgroundColor: '#089BD1', width: '100%' }} className="btn btn-primary w-md waves-effect waves-light" type="submit">Reset</button>
                                         </div>
                                     </div>
 
-                                    <div className="form-group m-t-10 mb-0 row">
-                                        <div className="col-12 text-center m-t-20">
-                                            <Link to="reset" className="text-muted"><i className="mdi mdi-lock"></i> Forgot your password?</Link>
-                                        </div>
-                                    </div>
                                 </form>
                             </div>
                         </div>
                     </div>
 
                     <div className="m-t-40 text-center">
-                        <p className="text-white">Don't have an account ? <Link to="register" className="font-500 font-14 text-white font-secondary"> Signup Now </Link> </p>
+                        <p className="text-white">Remembered it ? <Link to="login" className="font-500 font-14 text-white font-secondary"> Sign In Here </Link> </p>
                         <p className="text-white">©  {new Date().getFullYear()} Gudani</p>
                     </div>
                 </div>
@@ -125,4 +100,4 @@ const mapStatetoProps = state => {
     };
 }
 
-export default connect(mapStatetoProps, actions)(Login);
+export default connect(mapStatetoProps, actions)(PasswordReset);

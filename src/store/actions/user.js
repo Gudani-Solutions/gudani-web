@@ -117,6 +117,19 @@ export const editUser = (formData) => {
     }
 }
 
+export const resetPassword = (email) => {
+    return async (dispatch, getState) => {
+        try {
+
+            await firebase.auth().sendPasswordResetEmail(email)
+            return true
+        } catch (e) {
+            console.log(e.message)
+            return false
+        }
+    }
+}
+
 export const deleteUser = (uid) => {
     return async (dispatch, getState) => {
         try {
