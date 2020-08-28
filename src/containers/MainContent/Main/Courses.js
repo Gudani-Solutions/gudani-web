@@ -5,18 +5,15 @@ import { bindActionCreators } from 'redux'
 import { Link } from 'react-router-dom';
 import { withRouter } from 'react-router-dom';
 import { } from '../../../store/actions/user'
+import Select from 'react-select';
 
 class Courses extends Component {
 
     state = {
-        course: {
-            code: '',
-            title: '',
-            description: '',
-            duration: '',
-        },
         errorMessage: '',
-        courseCodes: [],
+        selectedCourse: {
+        },
+        courseOptions: [],
         courseIsSelected: false
     }
 
@@ -36,16 +33,32 @@ class Courses extends Component {
         }
     }
 
-    searchCourse = async () => {
+    searchCourse = async (selectedCourse) => {
         try {
+            this.setState({ selectedCourse: selectedCourse })
+        } catch (e) {
+            console.log(e.message)
+        }
+    }
 
+    addCourse = async (e) => {
+        try {
+            e.preventDefault()
+            // 
         } catch (e) {
             console.log(e.message)
         }
     }
 
     render() {
-
+        const courseOptions = [
+            { value: 'ECO1010F', label: 'ECO1010F - Introduction to Economics' },
+            { value: 'ECO1010S', label: 'ECO1010S - Introduction to Economics' },
+            { value: 'POL1010F', label: 'POL1010F - Introduction to Politics' },
+            { value: 'PHL1010F', label: 'PHL1010F - Introduction to Philosophy' },
+            { value: 'MAM1010F', label: 'MAM1010F - Introduction to Mathematics' },
+            { value: 'PHY1010F', label: 'PHY1010F - Introduction to Physics' },
+        ];
         return (
             <AUX>
                 <div className="page-content-wrapper">
@@ -97,16 +110,15 @@ class Courses extends Component {
                                                                     <div className="col-sm-12">
                                                                         <div className="form-group">
                                                                             <label for="metatitle">Find Course</label>
-                                                                            <input onChange={(event) => this.setState({ course: { ...this.state.course, title: event.target.value } })} placeholder="Enter course code" value={this.state.course.title} id="metatitle" name="productname" type="text" className="form-control" />
+                                                                            <Select
+                                                                                value={this.state.selectedCourse}
+                                                                                onChange={this.searchCourse}
+                                                                                options={courseOptions}
+                                                                            />
                                                                         </div>
-
                                                                         <div className="col-sm-12 text-center">
-                                                                            <button style={{ width: '100%' }} onClick={(e) => this.searchCourse(e)} type="primary" color='primary' className="btn btn-success waves-effect waves-light" block>Next</button>
+                                                                            <button data-toggle="modal" data-target="#courseModal" style={{ width: '100%' }} onClick={(e) => this.addCourse(e)} type="primary" color='primary' className="btn btn-success waves-effect waves-light" block>Add Course</button>
                                                                         </div>
-
-                                                                        {/* <div className="col-sm-12 text-center">
-                                                                            <button style={{ width: '90%' }} data-target="#courseModal" data-toggle="modal" onClick={(e) => this.createCourse(e)} type="primary" color='primary' className="btn btn-success waves-effect waves-light" block>Submit</button>
-                                                                        </div> */}
                                                                     </div>
                                                                 </div>
                                                             </form>

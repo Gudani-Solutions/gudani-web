@@ -16,12 +16,7 @@ class Login extends Component {
     }
 
     componentDidMount() {
-        // if (this.props.loginpage === false) {
-        //     this.props.UpdateLogin();
-        // }
-        // window.onpopstate = (e) => {
-        //     this.props.UpdateLoginAgain();
-        // }
+        
     }
 
     handleChangeEmail = (e) => {

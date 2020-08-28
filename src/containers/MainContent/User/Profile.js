@@ -6,6 +6,7 @@ import { Link } from 'react-router-dom';
 import { withRouter } from 'react-router-dom';
 import { } from '../../../store/actions/user'
 import * as actions from '../../../store/actions/user';
+import Select from 'react-select';
 
 class Profile extends Component {
 
@@ -15,10 +16,12 @@ class Profile extends Component {
             uid: '',
             firstname: '',
             lastname: '',
+            phonenumber: '',
             email: '',
             role: '',
             institution: '',
             institutionID: '',
+            department: ''
         }
     }
 
@@ -39,7 +42,16 @@ class Profile extends Component {
     }
 
     render() {
-
+        const departmentsOptions = [
+            { value: 'School of Economics', label: 'School of Economics' },
+            { value: 'Electrical Engineering', label: 'Electrical Engineering' },
+            { value: 'Educational Development Unit', label: 'Educational Development Unit' },
+            { value: 'Mathematics', label: 'Mathematics' },
+            { value: 'Physics', label: 'Physics' },
+            { value: 'Philosophy', label: 'Philosophy' },
+            { value: 'Politics Studies', label: 'Politics Studies' },
+            { value: 'Private Law', label: 'Private Law' },
+        ];
         return (
             <AUX>
                 <div className="page-content-wrapper">
@@ -113,11 +125,27 @@ class Profile extends Component {
 
                                                                 <select onChange={(event) => this.setState({ user: { ...this.state.user, role: event.target.value } })} value={this.state.user.role} className="form-control select2">
                                                                     <option>Select</option>
-                                                                    <option value="AK">Assessor</option>
-                                                                    <option value="HI">Student</option>
+                                                                    <option value="Assessor">Assessor</option>
+                                                                    <option value="Student">Student</option>
                                                                 </select>
                                                                 :
                                                                 <p className="font-13 text-muted">{this.state.user.role}</p>
+                                                        }
+                                                    </div>
+
+                                                    <div className="form-group">
+                                                        <label for="role">Department</label>
+                                                        {
+                                                            this.state.isEditMode ?
+
+                                                                <Select
+                                                                    placeholder='Search'
+                                                                    value={{ value: this.state.user.department, label: this.state.user.department }}
+                                                                    onChange={(selectedOption) => this.setState({ user: { ...this.state.user, department: selectedOption.value } })}
+                                                                    options={departmentsOptions}
+                                                                />
+                                                                :
+                                                                <p className="font-13 text-muted">{this.state.user.department}</p>
                                                         }
                                                     </div>
 
@@ -131,6 +159,16 @@ class Profile extends Component {
                                                                 <input className="form-control" onChange={(event) => this.setState({ user: { ...this.state.user, lastname: event.target.value } })} value={this.state.user.lastname} type="text" placeholder="Lastname" />
                                                                 :
                                                                 <p className="font-13 text-muted">{this.state.user.lastname}</p>
+                                                        }
+                                                    </div>
+
+                                                    <div className="form-group">
+                                                        <label for="firstname">Phone Number</label>
+                                                        {
+                                                            this.state.isEditMode ?
+                                                                <input className="form-control" onChange={(event) => this.setState({ user: { ...this.state.user, phonenumber: event.target.value } })} value={this.state.user.phonenumber} type="text" placeholder="Phone Numbers" />
+                                                                :
+                                                                <p className="font-13 text-muted">{this.state.user.phonenumber}</p>
                                                         }
                                                     </div>
 

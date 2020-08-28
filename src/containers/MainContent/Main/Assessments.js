@@ -10,14 +10,11 @@ class Assessments extends Component {
 
     state = {
         assessment: {
-            code: '',
             title: '',
             description: '',
             duration: '',
         },
         errorMessage: '',
-        courseCodes: [],
-        courseIsSelected: false
     }
 
     dataValidation = () => {
@@ -36,13 +33,6 @@ class Assessments extends Component {
         }
     }
 
-    searchCourse = async () => {
-        try {
-
-        } catch (e) {
-            console.log(e.message)
-        }
-    }
 
     render() {
 
@@ -76,8 +66,6 @@ class Assessments extends Component {
                                             </div>
                                         </div>
 
-
-
                                         <div id="courseModal" className="modal fade" tabIndex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
                                             <div style={{ margin: 'auto', paddingTop: 30, paddingBottom: 30, width: '80%' }} className="modal-dialog modal-lg">
                                                 <div className="modal-content">
@@ -110,9 +98,6 @@ class Assessments extends Component {
                                                                             <button style={{ width: '100%' }} onClick={(e) => this.searchCourse(e)} type="primary" color='primary' className="btn btn-success waves-effect waves-light" block>Submit</button>
                                                                         </div>
 
-                                                                        {/* <div className="col-sm-12 text-center">
-                                                                            <button style={{ width: '90%' }} data-target="#courseModal" data-toggle="modal" onClick={(e) => this.createCourse(e)} type="primary" color='primary' className="btn btn-success waves-effect waves-light" block>Submit</button>
-                                                                        </div> */}
                                                                     </div>
                                                                 </div>
                                                             </form>

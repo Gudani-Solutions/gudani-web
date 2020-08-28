@@ -6,6 +6,8 @@ let initialState = {
     role: '',
     photo: '',
     univerisity: '',
+    department: '',
+    phonenumber: '',
     courses: [],
     assessments: [],
     isVerified: false,
