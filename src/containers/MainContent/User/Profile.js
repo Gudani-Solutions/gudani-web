@@ -7,6 +7,7 @@ import { withRouter } from 'react-router-dom';
 import { } from '../../../store/actions/user'
 import * as actions from '../../../store/actions/user';
 import Select from 'react-select';
+import { functions } from '../../../config/firebase'
 
 class Profile extends Component {
 
@@ -22,7 +23,8 @@ class Profile extends Component {
             institution: '',
             institutionID: '',
             department: ''
-        }
+        },
+        departmentsOptions: []
     }
 
     dataValidation = () => {
@@ -33,9 +35,36 @@ class Profile extends Component {
         }
     }
 
+    componentWillMount = async () => {
+        try {
+
+
+        } catch (e) {
+            console.log(e.message)
+        }
+    }
+
     componentDidMount = async () => {
         try {
-            this.setState({ user: this.props.user })
+
+            await this.setState({ user: this.props.user })
+
+            await functions()
+                .httpsCallable('getDeptByUniversity')({
+                    university: this.props.user.institution
+                })
+                .then(response => {
+                    let data = []
+                    let departments = [...new Set(response.data.data)]
+
+                    if (departments) {
+                        departments.forEach(item => {
+                            data.push({ value: item, label: item })
+                        })
+                        this.setState({ departmentsOptions: data })
+                    }
+                });
+
         } catch (e) {
             console.log(e.message)
         }
@@ -142,7 +171,7 @@ class Profile extends Component {
                                                                     placeholder='Search'
                                                                     value={{ value: this.state.user.department, label: this.state.user.department }}
                                                                     onChange={(selectedOption) => this.setState({ user: { ...this.state.user, department: selectedOption.value } })}
-                                                                    options={departmentsOptions}
+                                                                    options={this.state.departmentsOptions}
                                                                 />
                                                                 :
                                                                 <p className="font-13 text-muted">{this.state.user.department}</p>

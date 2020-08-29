@@ -92,7 +92,7 @@ exports.getCoursesByDept = functions.https.onCall(async (data, context) => {
         await query.forEach(async (item) => {
             let temp = item.data()
             if (temp.department === data.department) {
-                resolvedItems.push(temp.department)
+                resolvedItems.push(temp)
             }
         })
 

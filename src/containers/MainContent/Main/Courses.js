@@ -6,6 +6,7 @@ import { Link } from 'react-router-dom';
 import { withRouter } from 'react-router-dom';
 import { } from '../../../store/actions/user'
 import Select from 'react-select';
+import { functions } from '../../../config/firebase'
 
 class Courses extends Component {
 
@@ -27,7 +28,22 @@ class Courses extends Component {
 
     componentWillMount = async () => {
         try {
+            await functions()
+                .httpsCallable('getCoursesByDept')({
+                    university: this.props.user.institution,
+                    department: this.props.user.department
+                })
+                .then(response => {
+                    let data = []
+                    let courses = response.data.data
 
+                    if (courses) {
+                        courses.forEach(item => {
+                            data.push({ value: item.code, label: item.code + " - " + item.title, ...item })
+                        })
+                        this.setState({ courseOptions: data })
+                    }
+                });
         } catch (e) {
             console.log(e.message)
         }
@@ -51,14 +67,6 @@ class Courses extends Component {
     }
 
     render() {
-        const courseOptions = [
-            { value: 'ECO1010F', label: 'ECO1010F - Introduction to Economics' },
-            { value: 'ECO1010S', label: 'ECO1010S - Introduction to Economics' },
-            { value: 'POL1010F', label: 'POL1010F - Introduction to Politics' },
-            { value: 'PHL1010F', label: 'PHL1010F - Introduction to Philosophy' },
-            { value: 'MAM1010F', label: 'MAM1010F - Introduction to Mathematics' },
-            { value: 'PHY1010F', label: 'PHY1010F - Introduction to Physics' },
-        ];
         return (
             <AUX>
                 <div className="page-content-wrapper">
@@ -113,7 +121,7 @@ class Courses extends Component {
                                                                             <Select
                                                                                 value={this.state.selectedCourse}
                                                                                 onChange={this.searchCourse}
-                                                                                options={courseOptions}
+                                                                                options={this.state.courseOptions}
                                                                             />
                                                                         </div>
                                                                         <div className="col-sm-12 text-center">
