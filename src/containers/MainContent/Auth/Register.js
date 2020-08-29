@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux'
 import * as actions from '../../../store/actions/user';
+import { functions } from '../../../config/firebase'
 
 class Register extends Component {
 
@@ -18,16 +19,19 @@ class Register extends Component {
         role_err: '',
         institution: '',
         institution_err: '',
+        department: '',
+        department_err: '',
         institutionID: '',
         institutionID_err: '',
         pwd: '',
         pwd_err: '',
         pwd1: '',
-        pwd1err: ''
+        pwd1err: '',
+        departmentsData: []
     }
 
     componentDidMount() {
-       
+
     }
 
     handleChangeFirstName = (e) => {
@@ -67,10 +71,28 @@ class Register extends Component {
 
     handleChangeInstitution = (e) => {
         this.setState({ institution: e.target.value });
-        if (e.target.value === '')
+        if (e.target.value === '') {
             this.setState({ institution_err: 'Required Field' });
-        else
+        }
+        else {
+            functions()
+                .httpsCallable('getDeptByUniversity')({
+                    university: e.target.value
+                })
+                .then(response => {
+                    this.setState({ departmentsData: [...new Set(response.data.data)] })
+                });
             this.setState({ institution_err: '' });
+        }
+
+    }
+
+    handleChangeDepartment = (e) => {
+        this.setState({ department: e.target.value });
+        if (e.target.value === '')
+            this.setState({ department_err: 'Required Field' });
+        else
+            this.setState({ department_err: '' });
     }
 
     handleChangeInstitutionalID = (e) => {
@@ -115,6 +137,8 @@ class Register extends Component {
                 this.setState({ role_err: 'Required Field' });
             if (this.state.institution === '')
                 this.setState({ institution_err: 'Required Field' });
+            if (this.state.department === '')
+                this.setState({ department_err: 'Required Field' });
             if (this.state.institutionID === '')
                 this.setState({ institutionID_err: 'Required Field' });
             if (this.state.pwd === '')
@@ -129,6 +153,7 @@ class Register extends Component {
     }
 
     render() {
+        console.log(this.state.departmentsData)
         return (
             <AUX>
                 <div className="accountbg"></div>
@@ -196,6 +221,19 @@ class Register extends Component {
                                             <option>University of Fort Hare</option>
                                         </select>
                                         <span style={{ color: 'red' }} id="err">{this.state.institution_err}</span>
+                                    </div>
+
+                                    <div className="form-group">
+                                        <label for="instId">Department</label>
+                                        <select style={{ borderColor: this.state.department_err ? 'red' : null }} value={this.state.department} onChange={this.handleChangeDepartment} className="form-control">
+                                            <option>Select</option>
+                                            {
+                                                this.state.departmentsData.map(item => (
+                                                    <option>{item}</option>
+                                                ))
+                                            }
+                                        </select>
+                                        <span style={{ color: 'red' }} id="err">{this.state.department_err}</span>
                                     </div>
 
                                     <div className="form-group">

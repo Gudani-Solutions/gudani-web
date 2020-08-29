@@ -15,3 +15,5 @@ firebase.initializeApp(config);
 export const firestore = firebase.firestore()
 
 export const database = firebase.database
+
+export const functions = firebase.functions

@@ -22,7 +22,8 @@ export const register = (formData) => {
                     email: formData.email,
                     role: formData.role,
                     institution: formData.institution,
-                    institutionID: formData.institutionID
+                    institutionID: formData.institutionID,
+                    department: formData.department
                 }
 
                 await firestore.collection('users').doc(newUser.uid).set(newUser)
