@@ -98,25 +98,19 @@ class Courses extends Component {
 
                                         <div className="row">
                                             <div className="col-12">
-                                                <div className="card">
-                                                    <div className="card-body">
-                                                        <div className="row">
-                                                            {
-                                                                this.props.course.courses.map(item => (
-                                                                    <div style={{ backgroundColor: '#23B7ED' }} className="col-md-6 col-lg-3 text-center">
-                                                                        <a href="" className="text-dark">
-                                                                            <h1 style={{ textAlign: 'center' }}>
-                                                                                {item.code}
-                                                                            </h1>
-                                                                            <div className="detail">
-                                                                                <h2 className="font-16">{item.title} </h2>
-                                                                            </div>
-                                                                        </a>
-                                                                    </div>
-                                                                ))
-                                                            }
-                                                        </div>
-                                                    </div>
+                                                <div className="row">
+                                                    {
+                                                        this.props.course.courses.map(item => (
+                                                            <div style={{ backgroundColor: '#23B7ED', borderRadius: 10 }} className="col-md-6 col-lg-3 text-center">
+                                                                <a href="" className="text-dark">
+                                                                    <h2 style={{ color: 'white' }}>
+                                                                        {item.code}
+                                                                    </h2>
+                                                                    <h4 style={{ color: 'white' }}>{item.title} </h4>
+                                                                </a>
+                                                            </div>
+                                                        ))
+                                                    }
                                                 </div>
                                             </div>
                                         </div>
