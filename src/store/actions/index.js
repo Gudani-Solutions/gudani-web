@@ -2,11 +2,21 @@ import { firestore } from '../../config/firebase'
 import firebase from 'firebase'
 import { orderBy } from 'lodash'
 import { getCourses } from './course'
+import { getCoursesData } from './dataManagement'
 
 export const sync = () => {
     return async (dispatch, getState) => {
         try {
-            await dispatch(getCourses())
+
+            let { user } = getState()
+
+            if (user.role === 'Admin') {
+                await dispatch(getCoursesData())
+            }
+            if (user.role === 'Assessor') {
+                await dispatch(getCourses())
+            }
+
         } catch (e) {
             console.log(e.message)
         }

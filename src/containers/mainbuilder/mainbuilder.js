@@ -16,6 +16,8 @@ import Home from '../MainContent/Main/Home.js';
 import Courses from '../MainContent/Main/Courses.js';
 import Assessments from '../MainContent/Main/Assessments.js';
 
+import DataManagement from '../MainContent/Main/DataManagement.js';
+
 import { database } from '../../config/firebase'
 import firebase from 'firebase'
 
@@ -39,8 +41,19 @@ class mainbuilder extends Component {
         return (
             this.state.isAuthenticated ?
                 <Switch>
-                    <Route path="/courses" component={Courses} />
-                    <Route path="/assessments" component={Assessments} />
+                    {
+                        this.props.user.role === 'Admin' ?
+                            <Route path="/data" component={DataManagement} /> : null
+                    }
+                    {
+                        this.props.user.role === 'Assessor' ?
+                            <>
+                                <Route path="/courses" component={Courses} />
+                                <Route path="/assessments" component={Assessments} />
+                            </>
+                            : null
+                    }
+
                     <Route path="/profile" component={Profile} />
                     <Route path="/home" component={Home} />
                     <Route path="/" component={Home} />

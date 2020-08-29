@@ -224,33 +224,49 @@ class Register extends Component {
                                     </div>
 
                                     <div className="form-group">
-                                        <label for="instId">Department</label>
-                                        <select style={{ borderColor: this.state.department_err ? 'red' : null }} value={this.state.department} onChange={this.handleChangeDepartment} className="form-control">
-                                            <option>Select</option>
-                                            {
-                                                this.state.departmentsData.map(item => (
-                                                    <option>{item}</option>
-                                                ))
-                                            }
-                                        </select>
-                                        <span style={{ color: 'red' }} id="err">{this.state.department_err}</span>
-                                    </div>
-
-                                    <div className="form-group">
                                         <label for="instId">Role</label>
                                         <select style={{ borderColor: this.state.role_err ? 'red' : null }} value={this.state.role} onChange={this.handleChangeRole} className="form-control">
                                             <option>Select</option>
                                             <option>Assessor</option>
                                             <option>Student</option>
+                                            <option>Admin</option>
                                         </select>
                                         <span style={{ color: 'red' }} id="err">{this.state.role_err}</span>
                                     </div>
 
-                                    <div className="form-group">
-                                        <label>Institutional ID</label>
-                                        <input style={{ borderColor: this.state.institutionID_err ? 'red' : null }} type="text" className="form-control" value={this.state.institutionID} onChange={this.handleChangeInstitutionalID} placeholder="Enter Staff/Student ID" />
-                                        <span style={{ color: 'red' }} id="err">{this.state.institutionID_err}</span>
-                                    </div>
+                                    {
+                                        this.state.role === 'Assessor' ?
+                                            <>
+                                                <div className="form-group">
+                                                    <label for="instId">Department</label>
+                                                    <select style={{ borderColor: this.state.department_err ? 'red' : null }} value={this.state.department} onChange={this.handleChangeDepartment} className="form-control">
+                                                        <option>Select</option>
+                                                        {
+                                                            this.state.departmentsData.map(item => (
+                                                                <option>{item}</option>
+                                                            ))
+                                                        }
+                                                    </select>
+                                                    <span style={{ color: 'red' }} id="err">{this.state.department_err}</span>
+                                                </div>
+
+                                                <div className="form-group">
+                                                    <label>Staff ID</label>
+                                                    <input style={{ borderColor: this.state.institutionID_err ? 'red' : null }} type="text" className="form-control" value={this.state.institutionID} onChange={this.handleChangeInstitutionalID} placeholder="Enter Staff ID" />
+                                                    <span style={{ color: 'red' }} id="err">{this.state.institutionID_err}</span>
+                                                </div> </> : null
+                                    }
+
+                                    {
+                                        this.state.role === 'Student' ?
+                                            <div className="form-group">
+                                                <label>Student ID</label>
+                                                <input style={{ borderColor: this.state.institutionID_err ? 'red' : null }} type="text" className="form-control" value={this.state.institutionID} onChange={this.handleChangeInstitutionalID} placeholder="Enter Student ID" />
+                                                <span style={{ color: 'red' }} id="err">{this.state.institutionID_err}</span>
+                                            </div> : null
+                                    }
+
+
 
                                     <div className="form-group">
                                         <label>Password</label>

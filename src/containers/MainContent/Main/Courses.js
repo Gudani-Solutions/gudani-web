@@ -96,25 +96,20 @@ class Courses extends Component {
                                             </div>
                                         </div>
 
-                                        <div className="row">
-                                            <div className="col-12">
-                                                <div className="row">
-                                                    {
-                                                        this.props.course.courses.map(item => (
-                                                            <div style={{ backgroundColor: '#23B7ED', borderRadius: 10 }} className="col-md-6 col-lg-3 text-center">
-                                                                <a href="" className="text-dark">
-                                                                    <h2 style={{ color: 'white' }}>
-                                                                        {item.code}
-                                                                    </h2>
-                                                                    <h4 style={{ color: 'white' }}>{item.title} </h4>
-                                                                </a>
-                                                            </div>
-                                                        ))
-                                                    }
-                                                </div>
-                                            </div>
+                                        <div style={{ padding: 10, justifyContent: 'center' }} className="row">
+                                            {
+                                                this.props.course.courses.map(item => (
+                                                    <div style={{ backgroundColor: '#23B7ED', borderRadius: 10, margin: 5 }} className="col-md-6 col-lg-3 text-center">
+                                                        <a href="" className="text-dark">
+                                                            <h2 style={{ color: 'white' }}>
+                                                                {item.code}
+                                                            </h2>
+                                                            <h4 style={{ color: 'white' }}>{item.title} </h4>
+                                                        </a>
+                                                    </div>
+                                                ))
+                                            }
                                         </div>
-
 
                                         <div id="courseModal" className="modal fade" tabIndex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
                                             <div style={{ margin: 'auto', paddingTop: 30, paddingBottom: 30, width: '80%' }} className="modal-dialog modal-lg">

@@ -71,16 +71,6 @@ class Profile extends Component {
     }
 
     render() {
-        const departmentsOptions = [
-            { value: 'School of Economics', label: 'School of Economics' },
-            { value: 'Electrical Engineering', label: 'Electrical Engineering' },
-            { value: 'Educational Development Unit', label: 'Educational Development Unit' },
-            { value: 'Mathematics', label: 'Mathematics' },
-            { value: 'Physics', label: 'Physics' },
-            { value: 'Philosophy', label: 'Philosophy' },
-            { value: 'Politics Studies', label: 'Politics Studies' },
-            { value: 'Private Law', label: 'Private Law' },
-        ];
         return (
             <AUX>
                 <div className="page-content-wrapper">
@@ -110,7 +100,7 @@ class Profile extends Component {
                                                             >Save Changes</button>
                                                             <button style={{ width: '25%', }} className="btn btn-secondary waves-effect waves-light"
                                                                 onClick={() => {
-                                                                    this.setState({ isEditMode: false })
+                                                                    this.setState({ isEditMode: false, user: this.props.user })
                                                                 }}
                                                             >Cancel</button>
                                                         </>
@@ -156,27 +146,32 @@ class Profile extends Component {
                                                                     <option>Select</option>
                                                                     <option value="Assessor">Assessor</option>
                                                                     <option value="Student">Student</option>
+                                                                    <option value="Admin">Admin</option>
                                                                 </select>
                                                                 :
                                                                 <p className="font-13 text-muted">{this.state.user.role}</p>
                                                         }
                                                     </div>
 
-                                                    <div className="form-group">
-                                                        <label for="role">Department</label>
-                                                        {
-                                                            this.state.isEditMode ?
+                                                    {
+                                                        this.state.user.role === 'Assessor' ?
+                                                            <div className="form-group">
+                                                                <label for="role">Department</label>
+                                                                {
+                                                                    this.state.isEditMode ?
 
-                                                                <Select
-                                                                    placeholder='Search'
-                                                                    value={{ value: this.state.user.department, label: this.state.user.department }}
-                                                                    onChange={(selectedOption) => this.setState({ user: { ...this.state.user, department: selectedOption.value } })}
-                                                                    options={this.state.departmentsOptions}
-                                                                />
-                                                                :
-                                                                <p className="font-13 text-muted">{this.state.user.department}</p>
-                                                        }
-                                                    </div>
+                                                                        <Select
+                                                                            placeholder='Search'
+                                                                            value={{ value: this.state.user.department, label: this.state.user.department }}
+                                                                            onChange={(selectedOption) => this.setState({ user: { ...this.state.user, department: selectedOption.value } })}
+                                                                            options={this.state.departmentsOptions}
+                                                                        />
+                                                                        :
+                                                                        <p className="font-13 text-muted">{this.state.user.department}</p>
+                                                                }
+                                                            </div> : null
+                                                    }
+
 
                                                 </div>
 
@@ -201,15 +196,33 @@ class Profile extends Component {
                                                         }
                                                     </div>
 
-                                                    <div className="form-group">
-                                                        <label for="email">Instituitional ID</label>
-                                                        {
-                                                            this.state.isEditMode ?
-                                                                <input className="form-control" onChange={(event) => this.setState({ user: { ...this.state.user, institutionID: event.target.value } })} value={this.state.user.institutionID} type="text" placeholder="Instituitional ID" />
-                                                                :
-                                                                <p className="font-13 text-muted">{this.state.user.institutionID}</p>
-                                                        }
-                                                    </div>
+                                                    {
+                                                        this.state.user.role === 'Assessor' ?
+
+                                                            <div className="form-group">
+                                                                <label for="email">Staff ID</label>
+                                                                {
+                                                                    this.state.isEditMode ?
+                                                                        <input className="form-control" onChange={(event) => this.setState({ user: { ...this.state.user, institutionID: event.target.value } })} value={this.state.user.institutionID} type="text" placeholder="Staff ID" />
+                                                                        :
+                                                                        <p className="font-13 text-muted">{this.state.user.institutionID}</p>
+                                                                }
+                                                            </div> : null
+                                                    }
+
+                                                    {
+                                                        this.state.user.role === 'Student' ?
+
+                                                            <div className="form-group">
+                                                                <label for="email">Student ID</label>
+                                                                {
+                                                                    this.state.isEditMode ?
+                                                                        <input className="form-control" onChange={(event) => this.setState({ user: { ...this.state.user, institutionID: event.target.value } })} value={this.state.user.institutionID} type="text" placeholder="Staff ID" />
+                                                                        :
+                                                                        <p className="font-13 text-muted">{this.state.user.institutionID}</p>
+                                                                }
+                                                            </div> : null
+                                                    }
 
                                                     <div className="form-group">
 

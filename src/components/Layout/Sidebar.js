@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import 'react-perfect-scrollbar/dist/css/styles.css';
 import PerfectScrollbar from 'react-perfect-scrollbar';
 import $ from 'jquery';
+import { connect } from 'react-redux';
 
 class sidebar extends Component {
 
@@ -72,12 +73,26 @@ class sidebar extends Component {
                                 <li>
                                     <Link to="home" className={this.state.Tab === 'home_menu' ? 'waves-effect active-menu' : 'waves-effect'} onClick={this.setActiveTab.bind(this, 'home_menu', '', '')}><i className="mdi mdi-home"></i><span>Home</span></Link>
                                 </li>
-                                <li>
-                                    <Link to="courses" className={this.state.Tab === 'courses' ? 'waves-effect active-menu' : 'waves-effect'} onClick={this.setActiveTab.bind(this, 'courses', '', '')}><i className="mdi mdi-flag"></i><span>Courses</span></Link>
-                                </li>
-                                <li>
-                                    <Link to="assessments" className={this.state.Tab === 'assessments' ? 'waves-effect active-menu' : 'waves-effect'} onClick={this.setActiveTab.bind(this, 'assessments', '', '')}><i className="mdi mdi-bell"></i><span>Assessments</span></Link>
-                                </li>
+                                {
+                                    this.props.user.role === 'Admin' ?
+                                        <li>
+                                            <Link to="data" className={this.state.Tab === 'data' ? 'waves-effect active-menu' : 'waves-effect'} onClick={this.setActiveTab.bind(this, 'data', '', '')}><i className="mdi mdi-flag"></i><span>Data Management</span></Link>
+                                        </li>
+                                        : null
+                                }
+                                {
+                                    this.props.user.role === 'Assessor' ?
+                                        <>
+                                            <li>
+                                                <Link to="courses" className={this.state.Tab === 'courses' ? 'waves-effect active-menu' : 'waves-effect'} onClick={this.setActiveTab.bind(this, 'courses', '', '')}><i className="mdi mdi-flag"></i><span>Courses</span></Link>
+                                            </li>
+
+                                            <li>
+                                                <Link to="assessments" className={this.state.Tab === 'assessments' ? 'waves-effect active-menu' : 'waves-effect'} onClick={this.setActiveTab.bind(this, 'assessments', '', '')}><i className="mdi mdi-bell"></i><span>Assessments</span></Link>
+                                            </li>
+                                        </> : null
+                                }
+
                             </ul>
                         </div>
                         <div className="clearfix"></div>
@@ -89,4 +104,10 @@ class sidebar extends Component {
     }
 }
 
-export default withRouter(sidebar);
+const mapStatetoProps = state => {
+    return {
+        user: state.user,
+    };
+}
+
+export default connect(mapStatetoProps)(withRouter(sidebar));
