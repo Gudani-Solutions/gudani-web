@@ -21,6 +21,7 @@ class App extends Component {
       firebase.auth().onAuthStateChanged((user) => {
         if (user) {
           this.setState({ isAuthenticated: true })
+          this.props.sync()
         } else {
           this.setState({ isAuthenticated: false })
         }

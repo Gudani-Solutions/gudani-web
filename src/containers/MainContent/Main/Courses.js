@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux'
 import { Link } from 'react-router-dom';
 import { withRouter } from 'react-router-dom';
-import { } from '../../../store/actions/user'
+import * as actions from '../../../store/actions/course';
 import Select from 'react-select';
 import { functions } from '../../../config/firebase'
 
@@ -12,10 +12,10 @@ class Courses extends Component {
 
     state = {
         errorMessage: '',
-        selectedCourse: {
-        },
+        selectedCourse: {},
         courseOptions: [],
-        courseIsSelected: false
+        courseIsSelected: false,
+        selectionError: false,
     }
 
     dataValidation = () => {
@@ -51,7 +51,7 @@ class Courses extends Component {
 
     searchCourse = async (selectedCourse) => {
         try {
-            this.setState({ selectedCourse: selectedCourse })
+            this.setState({ selectedCourse: selectedCourse, courseIsSelected: true, selectionError: false })
         } catch (e) {
             console.log(e.message)
         }
@@ -60,7 +60,12 @@ class Courses extends Component {
     addCourse = async (e) => {
         try {
             e.preventDefault()
-            // 
+            if (this.state.courseIsSelected) {
+                this.props.createCourse(this.state.selectedCourse)
+            } else {
+                this.setState({ selectionError: true })
+            }
+
         } catch (e) {
             console.log(e.message)
         }
@@ -92,11 +97,29 @@ class Courses extends Component {
                                         </div>
 
                                         <div className="row">
-                                            <div className="col-sm-12 text-center">
-
+                                            <div className="col-12">
+                                                <div className="card">
+                                                    <div className="card-body">
+                                                        <div className="row">
+                                                            {
+                                                                this.props.course.courses.map(item => (
+                                                                    <div style={{ backgroundColor: '#23B7ED' }} className="col-md-6 col-lg-3 text-center">
+                                                                        <a href="" className="text-dark">
+                                                                            <h1 style={{ textAlign: 'center' }}>
+                                                                                {item.code}
+                                                                            </h1>
+                                                                            <div className="detail">
+                                                                                <h2 className="font-16">{item.title} </h2>
+                                                                            </div>
+                                                                        </a>
+                                                                    </div>
+                                                                ))
+                                                            }
+                                                        </div>
+                                                    </div>
+                                                </div>
                                             </div>
                                         </div>
-
 
 
                                         <div id="courseModal" className="modal fade" tabIndex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
@@ -117,7 +140,7 @@ class Courses extends Component {
                                                                 <div className="row">
                                                                     <div className="col-sm-12">
                                                                         <div className="form-group">
-                                                                            <label for="metatitle">Find Course</label>
+                                                                            <label style={{ color: this.state.selectionError ? 'red' : null }} for="metatitle">{this.state.selectionError ? 'Please select a course' : 'Find Course'}</label>
                                                                             <Select
                                                                                 value={this.state.selectedCourse}
                                                                                 onChange={this.searchCourse}
@@ -125,7 +148,7 @@ class Courses extends Component {
                                                                             />
                                                                         </div>
                                                                         <div className="col-sm-12 text-center">
-                                                                            <button data-toggle="modal" data-target="#courseModal" style={{ width: '100%' }} onClick={(e) => this.addCourse(e)} type="primary" color='primary' className="btn btn-success waves-effect waves-light" block>Add Course</button>
+                                                                            <button data-toggle={this.state.courseIsSelected ? "modal" : ""} data-target={this.state.courseIsSelected ? "#courseModal" : ""} style={{ width: '100%' }} onClick={(e) => this.addCourse(e)} type="primary" color='primary' className="btn btn-success waves-effect waves-light" block>Add Course</button>
                                                                         </div>
                                                                     </div>
                                                                 </div>
@@ -150,6 +173,7 @@ class Courses extends Component {
 const mapStatetoProps = state => {
     return {
         user: state.user,
+        course: state.course
     };
 }
 
@@ -157,4 +181,4 @@ const mapDispatchToProps = (dispatch) => {
     return bindActionCreators({}, dispatch)
 }
 
-export default withRouter(connect(mapStatetoProps, mapDispatchToProps)(Courses));
+export default withRouter(connect(mapStatetoProps, actions)(Courses));

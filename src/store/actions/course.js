@@ -5,21 +5,20 @@ import uuid from 'uuid'
 export const createCourse = (formData) => {
     return async (dispatch, getState) => {
         try {
-            let { user, course } = getState()
+            let { user } = getState()
 
             const newCourse = {
                 uid: uuid.v4(),
                 assessorUid: user.uid,
+                students: [],
+                assessments: [],
+                announcements: [],
+                photo: [],
+                ...formData
             }
 
-            let newCourses = course.courses.map(item => {
-                if (item.id === newCourse.id) {
-                    item = newCourse
-                } return item
-            })
-
-            dispatch({ type: 'UPDATE_COURSES', payload: orderBy(newCourses, 'date', 'desc') })
-            await firestore.collection('courses').doc(newCourse.id).set(newCourse)
+            await firestore.collection('courses').doc(newCourse.uid).set(newCourse)
+            await dispatch(getCourses())
 
             return true
         } catch (e) {
@@ -62,6 +61,8 @@ export const getCourses = () => {
     return async (dispatch, getState) => {
         try {
             let { uid } = getState().user
+
+            let resolvedItems = []
 
             const query = await firestore.collection('courses').where('assessorUid', '==', uid).get()
 
