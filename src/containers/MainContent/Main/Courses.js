@@ -100,12 +100,12 @@ class Courses extends Component {
                                             {
                                                 this.props.course.courses.map(item => (
                                                     <div style={{ backgroundColor: '#23B7ED', borderRadius: 10, margin: 5 }} className="col-md-6 col-lg-3 text-center">
-                                                        <a href="" className="text-dark">
+                                                        <Link to={"/coursedetail/" + item.uid} className="text-dark">
                                                             <h2 style={{ color: 'white' }}>
                                                                 {item.code}
                                                             </h2>
                                                             <h4 style={{ color: 'white' }}>{item.title} </h4>
-                                                        </a>
+                                                        </Link>
                                                     </div>
                                                 ))
                                             }

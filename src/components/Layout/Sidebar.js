@@ -71,12 +71,12 @@ class sidebar extends Component {
                         <div id="sidebar-menu">
                             <ul>
                                 <li>
-                                    <Link to="home" className={this.state.Tab === 'home_menu' ? 'waves-effect active-menu' : 'waves-effect'} onClick={this.setActiveTab.bind(this, 'home_menu', '', '')}><i className="mdi mdi-home"></i><span>Home</span></Link>
+                                    <Link to="/home" className={this.state.Tab === 'home_menu' ? 'waves-effect active-menu' : 'waves-effect'} onClick={this.setActiveTab.bind(this, 'home_menu', '', '')}><i className="mdi mdi-home"></i><span>Home</span></Link>
                                 </li>
                                 {
                                     this.props.user.role === 'Admin' ?
                                         <li>
-                                            <Link to="data" className={this.state.Tab === 'data' ? 'waves-effect active-menu' : 'waves-effect'} onClick={this.setActiveTab.bind(this, 'data', '', '')}><i className="mdi mdi-flag"></i><span>Data Management</span></Link>
+                                            <Link to="/data" className={this.state.Tab === 'data' ? 'waves-effect active-menu' : 'waves-effect'} onClick={this.setActiveTab.bind(this, 'data', '', '')}><i className="mdi mdi-flag"></i><span>Data Management</span></Link>
                                         </li>
                                         : null
                                 }
@@ -84,11 +84,11 @@ class sidebar extends Component {
                                     this.props.user.role === 'Assessor' ?
                                         <>
                                             <li>
-                                                <Link to="courses" className={this.state.Tab === 'courses' ? 'waves-effect active-menu' : 'waves-effect'} onClick={this.setActiveTab.bind(this, 'courses', '', '')}><i className="mdi mdi-flag"></i><span>Courses</span></Link>
+                                                <Link to="/courses" className={this.state.Tab === 'courses' ? 'waves-effect active-menu' : 'waves-effect'} onClick={this.setActiveTab.bind(this, 'courses', '', '')}><i className="mdi mdi-flag"></i><span>Courses</span></Link>
                                             </li>
 
                                             <li>
-                                                <Link to="assessments" className={this.state.Tab === 'assessments' ? 'waves-effect active-menu' : 'waves-effect'} onClick={this.setActiveTab.bind(this, 'assessments', '', '')}><i className="mdi mdi-bell"></i><span>Assessments</span></Link>
+                                                <Link to="/assessments" className={this.state.Tab === 'assessments' ? 'waves-effect active-menu' : 'waves-effect'} onClick={this.setActiveTab.bind(this, 'assessments', '', '')}><i className="mdi mdi-bell"></i><span>Assessments</span></Link>
                                             </li>
                                         </> : null
                                 }

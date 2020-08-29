@@ -35,7 +35,6 @@ class App extends Component {
 
   render() {
     let layout = null;
-
     layout = (
       <Layout isAuthenticated={this.state.isAuthenticated} user={this.props.user} header={this.props.header} sidebar={this.props.sidebar} footer={this.props.footer} loginpage={this.props.loginpage}>
         <Switch>
