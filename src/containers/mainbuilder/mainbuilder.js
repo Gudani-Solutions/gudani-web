@@ -41,6 +41,8 @@ class mainbuilder extends Component {
         return (
             this.state.isAuthenticated ?
                 <Switch>
+                    <Route path="/profile" component={Profile} />
+                    <Route path="/home" component={Home} />
                     {
                         this.props.user.role === 'Admin' ?
                             <Route path="/data" component={DataManagement} /> : null
@@ -54,8 +56,7 @@ class mainbuilder extends Component {
                             : null
                     }
 
-                    <Route path="/profile" component={Profile} />
-                    <Route path="/home" component={Home} />
+                   
                     <Route path="/" component={Home} />
                 </Switch>
                 :

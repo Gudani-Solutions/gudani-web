@@ -96,7 +96,7 @@ class Courses extends Component {
                                             </div>
                                         </div>
 
-                                        <div style={{ padding: 10, justifyContent: 'center' }} className="row">
+                                        <div style={{ padding: 10, justifyContent: 'start' }} className="row">
                                             {
                                                 this.props.course.courses.map(item => (
                                                     <div style={{ backgroundColor: '#23B7ED', borderRadius: 10, margin: 5 }} className="col-md-6 col-lg-3 text-center">
