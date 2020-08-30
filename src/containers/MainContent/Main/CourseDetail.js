@@ -151,26 +151,30 @@ class CourseDetail extends Component {
                                     <div className="card-body">
 
                                         <div className="row">
-                                            <div className="col-sm-7 text-left">
-                                                <h1>{this.state.course.code} - {this.state.course.title}</h1>
+                                            <div className="col-sm-5 text-left">
+                                                <h3>{this.state.course.code} - {this.state.course.title}</h3>
                                             </div>
-                                            <div className="col-sm-5 text-right">
-                                                <button data-toggle="modal" data-target="#assessmentModal" style={{ width: '25%', backgroundColor: '#089BD1', marginLeft: 5, marginRight: 5 }} className="btn btn-primary waves-effect waves-light"
+                                            <div className="col-sm-7 text-right">
+                                                <button data-toggle="modal" data-target="#assessmentModal" style={{ width: '20%', backgroundColor: '#089BD1', marginLeft: 5, marginRight: 5 }} className="btn btn-primary waves-effect waves-light"
                                                     onClick={() => {
 
                                                     }}
                                                 >Add Assessment</button>
-                                                <button data-toggle="modal" data-target="#studentModal" style={{ width: '25%', backgroundColor: '#089BD1', marginLeft: 5, marginRight: 5 }} className="btn btn-primary waves-effect waves-light"
+                                                <button data-toggle="modal" data-target="#studentModal" style={{ width: '20%', backgroundColor: '#089BD1', marginLeft: 5, marginRight: 5 }} className="btn btn-primary waves-effect waves-light"
                                                     onClick={() => {
 
                                                     }}
                                                 >Add Student</button>
-                                                <button data-toggle="modal" data-target="#courseModal" style={{ width: '25%', backgroundColor: '#089BD1', marginLeft: 5, marginRight: 5 }} className="btn btn-primary waves-effect waves-light"
+                                                <button data-toggle="modal" data-target="#courseModal" style={{ width: '20%', backgroundColor: '#089BD1', marginLeft: 5, marginRight: 5 }} className="btn btn-primary waves-effect waves-light"
                                                     onClick={() => {
 
                                                     }}
                                                 >Edit Course</button>
-
+                                                <button style={{ width: '20%', backgroundColor: '#089BD1', marginLeft: 5, marginRight: 5 }} className="btn btn-primary waves-effect waves-light"
+                                                    onClick={() => {
+                                                        this.props.history.push('/courses')
+                                                    }}
+                                                >Back</button>
                                             </div>
 
                                         </div>

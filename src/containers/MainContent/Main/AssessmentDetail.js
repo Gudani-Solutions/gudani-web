@@ -47,13 +47,20 @@ class AssessmentDetail extends Component {
                                                 <h5>{this.state.assessment.title}</h5>
                                             </div>
                                             <div className="col-sm-5 text-right">
-                                                <button data-toggle="modal" data-target="#assessmentModal" style={{ width: '25%', backgroundColor: '#089BD1', marginLeft: 5, marginRight: 5 }} className="btn btn-primary waves-effect waves-light"
+                                                <button data-toggle="modal" data-target="#assessmentModal" style={{ width: '20%', backgroundColor: '#089BD1', marginLeft: 5, marginRight: 5 }} className="btn btn-primary waves-effect waves-light"
                                                     onClick={() => {
                                                         this.setState({ isEditMode: true })
                                                     }}
-                                                >Edit Assessment</button>
+                                                >Edit</button>
+                                                <button data-toggle="modal" data-target="#courseModal" style={{ width: '20%', backgroundColor: '#089BD1', marginLeft: 5, marginRight: 5 }} className="btn btn-primary waves-effect waves-light"
+                                                    onClick={() => {
+                                                        this.props.history.push({
+                                                            pathname: '/coursedetail',
+                                                            state: { uid: this.state.assessment.courseUid },
+                                                        })
+                                                    }}
+                                                >Back</button>
                                             </div>
-
                                         </div>
                                         <div className="row">
                                             <div className="col-sm-8 text-left">
@@ -75,7 +82,7 @@ class AssessmentDetail extends Component {
                                 </div >
                             </div >
                         </div>
-                        
+
                         {
                             this.state.assessment.uid ? <AssessmentForm currentAssessment={this.state.assessment} isEditMode={true} /> : null
                         }
