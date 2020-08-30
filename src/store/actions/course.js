@@ -1,4 +1,5 @@
 import { firestore } from '../../config/firebase'
+import firebase from 'firebase'
 import { orderBy } from 'lodash'
 import uuid from 'uuid'
 
@@ -31,23 +32,40 @@ export const createCourse = (formData) => {
 export const editCourse = (formData) => {
     return async (dispatch, getState) => {
         try {
-            let { course } = getState()
-
-            const newCourse = {
+            const updatedCourse = {
                 updatedAt: new Date().getTime(),
-                ...formData,
+                uid: formData.uid,
+                university: formData.university,
+                department: formData.department,
+                title: formData.title,
+                code: formData.code,
+                description: formData.description,
+                photo: formData.photo,
             }
 
-            let newCourses = course.courses.map(item => {
-                if (item.id === newCourse.id) {
-                    item = newCourse
-                } return item
+            await firestore.collection('courses').doc(updatedCourse.uid).update({
+                ...updatedCourse
             })
 
-            dispatch({ type: 'UPDATE_COURSES', payload: orderBy(newCourses, 'date', 'desc') })
-            await firestore.collection('courses').doc(newCourse.id).update({
-                ...newCourse
+            await dispatch(getCourses())
+
+            return true
+        } catch (e) {
+            console.log(e.message)
+            return false
+        }
+    }
+}
+
+export const addStudent = (studentID, courseUid) => {
+    return async (dispatch, getState) => {
+        try {
+
+            await firestore.collection('courses').doc(courseUid).update({
+                students: firebase.firestore.FieldValue.arrayUnion(studentID),
             })
+
+            dispatch(getCourses())
 
             return true
         } catch (e) {

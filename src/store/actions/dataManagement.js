@@ -31,9 +31,6 @@ export const createCourseData = (formData) => {
 export const editCourseData = (formData) => {
     return async (dispatch, getState) => {
         try {
-            let { course } = getState()
-
-            console.log(formData)
 
             const updatedCourse = {
                 updatedAt: new Date().getTime(),
