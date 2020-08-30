@@ -54,7 +54,7 @@ class mainbuilder extends Component {
                     {
                         this.props.user.role === 'Assessor' ?
                             <>
-                                <Route exact path="/coursedetail/:uid" render={props => <CourseDetail {...props.match.params} />} />
+                                <Route exact path="/coursedetail" component={CourseDetail} />
                                 <Route path="/courses" component={Courses} />
                                 <Route path="/assessments" component={Assessments} />
                             </>

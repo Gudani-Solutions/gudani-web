@@ -79,7 +79,7 @@ class CourseDetail extends Component {
 
     componentWillMount = async () => {
         try {
-            let course = await this.props.course.courses.find(i => i.uid === this.props.match.params.uid)
+            let course = this.props.location.state.course
             this.setState({ course })
         } catch (e) {
             console.log(e.message)
@@ -95,7 +95,7 @@ class CourseDetail extends Component {
                 await this.props.addStudent(this.state.student, this.state.course.uid)
                 // let updatedStudents = this.state.course.students.push(this.state.student)
                 // console.log(updatedStudents)
-                this.setState({ student: ''})
+                this.setState({ student: '' })
             }
 
         } catch (e) {
@@ -149,7 +149,7 @@ class CourseDetail extends Component {
 
                                                     }}
                                                 >Add Student</button>
-                                                <button  data-toggle="modal" data-target="#courseModal" style={{ width: '25%', backgroundColor: '#089BD1', marginLeft: 10 }} className="btn btn-primary waves-effect waves-light"
+                                                <button data-toggle="modal" data-target="#courseModal" style={{ width: '25%', backgroundColor: '#089BD1', marginLeft: 10 }} className="btn btn-primary waves-effect waves-light"
                                                     onClick={() => {
                                                         this.setState({ isEditMode: true })
                                                     }}
