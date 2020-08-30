@@ -5,6 +5,7 @@ import { bindActionCreators } from 'redux'
 import { Link } from 'react-router-dom';
 import { withRouter } from 'react-router-dom';
 import * as actions from '../../../store/actions/course';
+import AssessmentForm from '../../../components/AssessmentForm';
 
 class CourseDetail extends Component {
 
@@ -26,6 +27,14 @@ class CourseDetail extends Component {
         code_err: '',
         description_err: '',
         isEditMode: false,
+        assessment: {
+            title: '',
+            startDate: '',
+            startTime: '',
+            duration: '',
+            type: '',
+            instructions: '',
+        }
     }
 
     dataValidation = () => {
@@ -140,20 +149,26 @@ class CourseDetail extends Component {
                                     <div className="card-body">
 
                                         <div className="row">
-                                            <div className="col-sm-8 text-left">
+                                            <div className="col-sm-7 text-left">
                                                 <h1>{this.state.course.code} - {this.state.course.title}</h1>
                                             </div>
-                                            <div className="col-sm-4 text-right">
-                                                <button data-toggle="modal" data-target="#studentModal" style={{ width: '25%', backgroundColor: '#089BD1' }} className="btn btn-primary waves-effect waves-light"
+                                            <div className="col-sm-5 text-right">
+                                                <button data-toggle="modal" data-target="#assessmentModal" style={{ width: '25%', backgroundColor: '#089BD1', marginLeft: 5, marginRight: 5 }} className="btn btn-primary waves-effect waves-light"
+                                                    onClick={() => {
+                                                        
+                                                    }}
+                                                >Add Assessment</button>
+                                                <button data-toggle="modal" data-target="#studentModal" style={{ width: '25%', backgroundColor: '#089BD1', marginLeft: 5, marginRight: 5 }} className="btn btn-primary waves-effect waves-light"
                                                     onClick={() => {
 
                                                     }}
                                                 >Add Student</button>
-                                                <button data-toggle="modal" data-target="#courseModal" style={{ width: '25%', backgroundColor: '#089BD1', marginLeft: 10 }} className="btn btn-primary waves-effect waves-light"
+                                                <button data-toggle="modal" data-target="#courseModal" style={{ width: '25%', backgroundColor: '#089BD1', marginLeft: 5, marginRight: 5 }} className="btn btn-primary waves-effect waves-light"
                                                     onClick={() => {
-                                                        this.setState({ isEditMode: true })
+                                                        
                                                     }}
                                                 >Edit Course</button>
+
                                             </div>
 
                                         </div>
@@ -165,15 +180,16 @@ class CourseDetail extends Component {
                                                 <p>No Assessements</p>
                                                 <h5>Announcements</h5>
                                                 <p>No Announcements</p>
-                                            </div>
-                                            <div className="col-sm-4 text-center">
                                                 <h5>Students</h5>
                                                 {
                                                     this.state.course.students.map(item => (
-                                                        <p>{item}</p>
+                                                        <span>{item}, </span>
                                                     ))
                                                 }
                                             </div>
+                                            {/* <div className="col-sm-4 text-center">
+
+                                            </div> */}
                                         </div>
                                     </div>
                                 </div >
@@ -217,12 +233,11 @@ class CourseDetail extends Component {
                             </div>
                         </div>
 
-
                         <div id="courseModal" className="modal fade" tabIndex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
                             <div style={{ margin: 'auto', paddingTop: 30, paddingBottom: 30, width: '80%' }} className="modal-dialog modal-lg">
                                 <div className="modal-content">
                                     <div className="modal-header">
-                                        <h5 className="modal-title mt-0" id="myModalLabel">Create Course Data</h5>
+                                        <h5 className="modal-title mt-0" id="myModalLabel">Edit Course</h5>
                                         <button type="button" className="close" data-dismiss="modal" aria-hidden="true">×</button>
                                     </div>
                                     <div className="modal-body">
@@ -272,6 +287,7 @@ class CourseDetail extends Component {
                                 </div>
                             </div>
                         </div>
+                        <AssessmentForm currentCourse={this.state.course} />
                     </div >
                 </div >
             </AUX >
