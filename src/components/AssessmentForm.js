@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
 import * as actions from '../store/actions/assessment';
 import { connect } from 'react-redux';
-import InputMask from 'react-input-mask';
-import MaterialInput from '@material-ui/core/Input';
+import { withRouter } from 'react-router-dom';
 
 class AssessmentForm extends Component {
     state = {
@@ -26,7 +25,6 @@ class AssessmentForm extends Component {
     componentWillMount = async () => {
         try {
             if (this.props.isEditMode) {
-                // alert(JSON.stringify(this.props.currentAssessment))
                 this.setState({ assessment: this.props.currentAssessment })
             }
 
@@ -112,6 +110,19 @@ class AssessmentForm extends Component {
         }
     }
 
+    deleteAssessment = async (e) => {
+        try {
+            this.props.deleteAssessment(this.state.assessment.uid, this.state.assessment.courseUid)
+            e.preventDefault()
+            this.props.history.push({
+                pathname: '/coursedetail',
+                state: { uid: this.state.assessment.courseUid },
+            })
+        } catch (e) {
+            console.log(e.message)
+        }
+    }
+
     render() {
         return (
 
@@ -166,14 +177,37 @@ class AssessmentForm extends Component {
                                         <span style={{ color: 'red' }} id="err">{this.state.instructions_err}</span>
                                     </div>
 
-                                    <div className="col-sm-12 text-center">
-                                        <button data-toggle={this.state.assessment.title && this.state.assessment.assessmentDate && this.state.assessment.assessmentTime &&
-                                            this.state.assessment.duration && this.state.assessment.type && this.state.assessment.instructions ? "modal" : ""}
-                                            data-target={this.state.assessment.title && this.state.assessment.assessmentDate && this.state.assessment.assessmentTime &&
-                                                this.state.assessment.duration && this.state.assessment.type && this.state.assessment.instructions ?
-                                                "#assessmentModal" : ""} style={{ width: '100%' }} onClick={(e) => this.updateAssessment(e)} type="primary"
-                                            color='primary' className="btn btn-success waves-effect waves-light" block>{this.props.isEditMode ? 'Edit Assessment' : 'Create Assessment'}</button>
-                                    </div>
+                                    {
+                                        this.props.isEditMode ?
+                                            <>
+                                                <div className="col-sm-12 text-center">
+                                                    <button data-toggle={this.state.assessment.title && this.state.assessment.assessmentDate && this.state.assessment.assessmentTime &&
+                                                        this.state.assessment.duration && this.state.assessment.type && this.state.assessment.instructions ? "modal" : ""}
+                                                        data-target={this.state.assessment.title && this.state.assessment.assessmentDate && this.state.assessment.assessmentTime &&
+                                                            this.state.assessment.duration && this.state.assessment.type && this.state.assessment.instructions ?
+                                                            "#assessmentModal" : ""} style={{ width: '100%' }} onClick={(e) => this.updateAssessment(e)} type="primary"
+                                                        color='primary' className="btn btn-success waves-effect waves-light" block>Edit Assessment</button>
+                                                </div>
+                                                <div style={{ marginTop: 10 }} className="col-sm-12 text-center">
+                                                    <button style={{ width: '100%' }} onClick={(e) => this.deleteAssessment(e)} type="danger"
+                                                        data-toggle={this.state.assessment.title && this.state.assessment.assessmentDate && this.state.assessment.assessmentTime &&
+                                                            this.state.assessment.duration && this.state.assessment.type && this.state.assessment.instructions ? "modal" : ""}
+                                                        data-target={this.state.assessment.title && this.state.assessment.assessmentDate && this.state.assessment.assessmentTime &&
+                                                            this.state.assessment.duration && this.state.assessment.type && this.state.assessment.instructions ?
+                                                            "#assessmentModal" : ""}
+                                                        color='primary' className="btn btn-danger waves-effect waves-light" block>Delete</button>
+                                                </div>
+                                            </>
+                                            :
+                                            <div className="col-sm-12 text-center">
+                                                <button data-toggle={this.state.assessment.title && this.state.assessment.assessmentDate && this.state.assessment.assessmentTime &&
+                                                    this.state.assessment.duration && this.state.assessment.type && this.state.assessment.instructions ? "modal" : ""}
+                                                    data-target={this.state.assessment.title && this.state.assessment.assessmentDate && this.state.assessment.assessmentTime &&
+                                                        this.state.assessment.duration && this.state.assessment.type && this.state.assessment.instructions ?
+                                                        "#assessmentModal" : ""} style={{ width: '100%' }} onClick={(e) => this.updateAssessment(e)} type="primary"
+                                                    color='primary' className="btn btn-success waves-effect waves-light" block>Create Assessment</button>
+                                            </div>
+                                    }
                                 </form>
                             </div>
                         </div>
@@ -193,4 +227,4 @@ const mapStatetoProps = state => {
 }
 
 
-export default connect(mapStatetoProps, actions)(AssessmentForm)
+export default withRouter(connect(mapStatetoProps, actions)(AssessmentForm))

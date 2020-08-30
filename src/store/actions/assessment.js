@@ -71,19 +71,16 @@ export const getAssessments = () => {
     }
 }
 
-export const deleteAssessment = (formData) => {
+export const deleteAssessment = (uid, courseUid) => {
     return async (dispatch, getState) => {
         try {
-            let { course } = getState()
 
-            course.courses.splice(formData.id, 1)
-
-            dispatch({ type: 'UPDATE_COURSES', payload: course.courses })
-
-            await firestore.collection('courses').doc(formData.id).delete()
+            await firestore.collection('assessments').doc(uid).delete()
+            await firestore.collection('courses').doc(courseUid).update({
+                assessments: firebase.firestore.FieldValue.arrayRemove(uid),
+            })
 
             dispatch(getAssessments())
-
             return true
         } catch (e) {
             console.log(e.message)

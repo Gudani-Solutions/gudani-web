@@ -89,7 +89,7 @@ class CourseDetail extends Component {
 
     componentWillMount = async () => {
         try {
-            let course = this.props.location.state.course
+            let course = await this.props.course.courses.find(c => c.uid === this.props.location.state.uid)
             this.setState({ course })
         } catch (e) {
             console.log(e.message)
@@ -188,7 +188,7 @@ class CourseDetail extends Component {
                                                                 <Link to={{
                                                                     pathname: "/assessmentdetail",
                                                                     state: {
-                                                                        assessment: item
+                                                                        uid: item.uid
                                                                     }
                                                                 }} className="text-dark">
                                                                     <h2 style={{ color: 'white' }}>

@@ -103,7 +103,7 @@ class Courses extends Component {
                                                         <Link to={{
                                                             pathname: "/coursedetail",
                                                             state: {
-                                                                course: item
+                                                                uid: item.uid
                                                             }
                                                         }} className="text-dark">
                                                             <h2 style={{ color: 'white' }}>
