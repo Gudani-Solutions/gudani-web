@@ -8,8 +8,6 @@ export const createAssessment = (formData, courseUid) => {
         try {
             let { user } = getState()
 
-            alert(courseUid)
-
             const newItem = {
                 uid: uuid.v4(),
                 courseUid: courseUid,
@@ -37,21 +35,13 @@ export const editAssessment = (formData) => {
         try {
             const updatedCourse = {
                 updatedAt: new Date().getTime(),
-                uid: formData.uid,
-                university: formData.university,
-                department: formData.department,
-                title: formData.title,
-                code: formData.code,
-                description: formData.description,
-                photo: formData.photo,
+                ...formData
             }
 
             await firestore.collection('assessments').doc(updatedCourse.uid).update({
                 ...updatedCourse
             })
-
             await dispatch(getAssessments())
-
             return true
         } catch (e) {
             console.log(e.message)
@@ -67,13 +57,13 @@ export const getAssessments = () => {
 
             let resolvedItems = []
 
-            const query = await firestore.collection('assessments').where('courseUid', '==', uid).get()
+            const query = await firestore.collection('assessments').where('assessorUid', '==', uid).get()
 
             query.forEach(async (item) => {
                 resolvedItems.push(item.data())
             })
 
-            dispatch({ type: 'UPDATE_ASSESSMENT', payload: orderBy(resolvedItems, 'date', 'desc') })
+            dispatch({ type: 'UPDATE_ASSESSMENTS', payload: orderBy(resolvedItems, 'date', 'desc') })
 
         } catch (e) {
             console.log(e.message)

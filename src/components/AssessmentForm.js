@@ -23,6 +23,18 @@ class AssessmentForm extends Component {
         instructions_err: '',
     }
 
+    componentWillMount = async () => {
+        try {
+            if (this.props.isEditMode) {
+                // alert(JSON.stringify(this.props.currentAssessment))
+                this.setState({ assessment: this.props.currentAssessment })
+            }
+
+        } catch (e) {
+            console.log(e.message)
+        }
+    }
+
     handleChangeTitle = (e) => {
         this.setState({ assessment: { ...this.state.assessment, title: e.target.value } });
         if (e.target.value === '')
@@ -71,7 +83,7 @@ class AssessmentForm extends Component {
             this.setState({ instructions_err: '' });
     }
 
-    createAssessment = async (e) => {
+    updateAssessment = async (e) => {
         try {
             e.preventDefault()
             if (this.state.assessment.title === '')
@@ -89,7 +101,11 @@ class AssessmentForm extends Component {
 
             if (this.state.assessment.title && this.state.assessment.assessmentDate && this.state.assessment.assessmentTime &&
                 this.state.assessment.duration && this.state.assessment.type && this.state.assessment.instructions) {
-                await this.props.createAssessment(this.state.assessment, this.props.currentCourse.uid)
+                if (this.props.isEditMode) {
+                    await this.props.editAssessment(this.state.assessment)
+                } else {
+                    await this.props.createAssessment(this.state.assessment, this.props.currentCourse.uid)
+                }
             }
         } catch (e) {
             console.log(e.message)
@@ -114,8 +130,6 @@ class AssessmentForm extends Component {
 
                             <div className="card-body">
                                 <form>
-
-
                                     <div className="form-group">
                                         <label>Title</label>
                                         <input style={{ borderColor: this.state.title_err ? 'red' : null }} type="text" className="form-control" value={this.state.assessment.title} onChange={this.handleChangeTitle} placeholder="Enter assessment title" />
@@ -157,8 +171,8 @@ class AssessmentForm extends Component {
                                             this.state.assessment.duration && this.state.assessment.type && this.state.assessment.instructions ? "modal" : ""}
                                             data-target={this.state.assessment.title && this.state.assessment.assessmentDate && this.state.assessment.assessmentTime &&
                                                 this.state.assessment.duration && this.state.assessment.type && this.state.assessment.instructions ?
-                                                "#assessmentModal" : ""} style={{ width: '100%' }} onClick={(e) => this.createAssessment(e)} type="primary"
-                                            color='primary' className="btn btn-success waves-effect waves-light" block>Create Assessment</button>
+                                                "#assessmentModal" : ""} style={{ width: '100%' }} onClick={(e) => this.updateAssessment(e)} type="primary"
+                                            color='primary' className="btn btn-success waves-effect waves-light" block>{this.props.isEditMode ? 'Edit Assessment' : 'Create Assessment'}</button>
                                     </div>
                                 </form>
                             </div>

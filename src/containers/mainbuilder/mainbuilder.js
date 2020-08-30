@@ -16,6 +16,8 @@ import Home from '../MainContent/Main/Home.js';
 import Courses from '../MainContent/Main/Courses.js';
 import CourseDetail from '../MainContent/Main/CourseDetail.js';
 import Assessments from '../MainContent/Main/Assessments.js';
+import AssessmentDetail from '../MainContent/Main/AssessmentDetail.js';
+
 
 import DataManagement from '../MainContent/Main/DataManagement.js';
 
@@ -54,6 +56,7 @@ class mainbuilder extends Component {
                     {
                         this.props.user.role === 'Assessor' ?
                             <>
+                            <Route exact path="/assessmentdetail" component={AssessmentDetail} />
                                 <Route exact path="/coursedetail" component={CourseDetail} />
                                 <Route path="/courses" component={Courses} />
                                 <Route path="/assessments" component={Assessments} />

@@ -3,6 +3,7 @@ import firebase from 'firebase'
 import { orderBy } from 'lodash'
 import { getCourses } from './course'
 import { getCoursesData } from './dataManagement'
+import { getAssessments } from './assessment'
 
 export const sync = () => {
     return async (dispatch, getState) => {
@@ -15,6 +16,7 @@ export const sync = () => {
             }
             if (user.role === 'Assessor') {
                 await dispatch(getCourses())
+                await dispatch(getAssessments())
             }
 
         } catch (e) {

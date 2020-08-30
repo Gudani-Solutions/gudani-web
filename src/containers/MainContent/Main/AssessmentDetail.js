@@ -7,7 +7,7 @@ import { withRouter } from 'react-router-dom';
 import * as actions from '../../../store/actions/course';
 import AssessmentForm from '../../../components/AssessmentForm';
 
-class CourseDetail extends Component {
+class AssessmentDetail extends Component {
 
     state = {
         course: {
@@ -38,108 +38,16 @@ class CourseDetail extends Component {
         assessements: []
     }
 
-    dataValidation = () => {
-        try {
-
-        } catch (e) {
-            console.log(e.message)
-        }
-    }
-
-    handleChangesStudent = (e) => {
-        this.setState({ student: e.target.value });
-        if (e.target.value === '')
-            this.setState({ student_err: 'Required Field' });
-        else
-            this.setState({ student_err: '' });
-    }
-
-    handleChangeDepartment = (e) => {
-        this.setState({ course: { ...this.state.course, department: e.target.value } });
-        if (e.target.value === '')
-            this.setState({ department_err: 'Required Field' });
-        else
-            this.setState({ department_err: '' });
-    }
-
-    handleChangeTitle = (e) => {
-        this.setState({ course: { ...this.state.course, title: e.target.value } });
-        if (e.target.value === '')
-            this.setState({ title_err: 'Required Field' });
-        else
-            this.setState({ title_err: '' });
-    }
-
-    handleChangeCode = (e) => {
-        this.setState({ course: { ...this.state.course, code: e.target.value } });
-        if (e.target.value === '')
-            this.setState({ code_err: 'Required Field' });
-        else
-            this.setState({ code_err: '' });
-    }
-
-    handleChangeDescription = (e) => {
-        this.setState({ course: { ...this.state.course, description: e.target.value } });
-        if (e.target.value === '')
-            this.setState({ description_err: 'Required Field' });
-        else
-            this.setState({ description_err: '' });
-    }
-
-
     componentWillMount = async () => {
         try {
-            let course = this.props.location.state.course
-            this.setState({ course })
-        } catch (e) {
-            console.log(e.message)
-        }
-    }
-
-    addStudent = async (e) => {
-        try {
-            e.preventDefault()
-            if (this.state.student === '')
-                this.setState({ student_err: 'Required Field' });
-            if (this.state.student) {
-                await this.props.addStudent(this.state.student, this.state.course.uid)
-                // let updatedStudents = this.state.course.students.push(this.state.student)
-                // console.log(updatedStudents)
-                this.setState({ student: '' })
-            }
-
-        } catch (e) {
-            console.log(e.message)
-        }
-    }
-
-    editCourse = async (e) => {
-        try {
-            e.preventDefault()
-            if (this.state.course.department === '')
-                this.setState({ department_err: 'Required Field' });
-            if (this.state.course.title === '')
-                this.setState({ title_err: 'Required Field' });
-            if (this.state.course.code === '')
-                this.setState({ code_err: 'Required Field' });
-            if (this.state.course.description === '')
-                this.setState({ description_err: 'Required Field' });
-
-            if (this.state.course.department && this.state.course.title && this.state.course.code && this.state.course.description) {
-                if (this.state.isEditMode) {
-                    await this.props.editCourse(this.state.course)
-                    let course = await this.props.course.courses.find(i => i.uid === this.state.course.uid)
-                    this.setState({ isEditMode: false, course })
-                } else {
-                }
-            }
+            let assessment = this.props.location.state.assessment
+            this.setState({ assessment })
         } catch (e) {
             console.log(e.message)
         }
     }
 
     render() {
-        let assessments = this.props.assessement.assessments.filter(c => c.courseUid === this.state.course.uid)
         return (
             <AUX>
                 <div className="page-content-wrapper">
@@ -152,65 +60,32 @@ class CourseDetail extends Component {
 
                                         <div className="row">
                                             <div className="col-sm-7 text-left">
-                                                <h1>{this.state.course.code} - {this.state.course.title}</h1>
+                                                <h5>{this.state.assessment.title}</h5>
                                             </div>
                                             <div className="col-sm-5 text-right">
                                                 <button data-toggle="modal" data-target="#assessmentModal" style={{ width: '25%', backgroundColor: '#089BD1', marginLeft: 5, marginRight: 5 }} className="btn btn-primary waves-effect waves-light"
                                                     onClick={() => {
-
+                                                        this.setState({ isEditMode: true })
                                                     }}
-                                                >Add Assessment</button>
-                                                <button data-toggle="modal" data-target="#studentModal" style={{ width: '25%', backgroundColor: '#089BD1', marginLeft: 5, marginRight: 5 }} className="btn btn-primary waves-effect waves-light"
-                                                    onClick={() => {
-
-                                                    }}
-                                                >Add Student</button>
-                                                <button data-toggle="modal" data-target="#courseModal" style={{ width: '25%', backgroundColor: '#089BD1', marginLeft: 5, marginRight: 5 }} className="btn btn-primary waves-effect waves-light"
-                                                    onClick={() => {
-
-                                                    }}
-                                                >Edit Course</button>
-
+                                                >Edit Assessment</button>
                                             </div>
 
                                         </div>
                                         <div className="row">
                                             <div className="col-sm-8 text-left">
-                                                <h5>Course Details</h5>
-                                                <p>{this.state.course.description}</p>
-                                                <h5>Assessments Schedule</h5>
-                                                <p>No Assessements</p>
+                                                <h5>Scheduled</h5>
+                                                <p>{this.state.assessment.assessmentDate} - {this.state.assessment.assessmentTime}</p>
+                                                <h5>Duration</h5>
+                                                <p>{this.state.assessment.duration} Hrs</p>
+                                                <h5>Type</h5>
+                                                <p>{this.state.assessment.type}</p>
+                                                <h5>Instructions Details</h5>
+                                                <p>{this.state.assessment.instructions}</p>
                                                 <h5>Announcements</h5>
-                                                <div style={{ padding: 10, justifyContent: 'start' }} className="row">
-                                                    {
-                                                        assessments.map(item => (
-                                                            <div style={{ backgroundColor: '#23B7ED', borderRadius: 10, margin: 5 }} className="col-md-6 col-lg-3 text-center">
-                                                                <Link to={{
-                                                                    pathname: "/assessmentdetail",
-                                                                    state: {
-                                                                        assessment: item
-                                                                    }
-                                                                }} className="text-dark">
-                                                                    <h2 style={{ color: 'white' }}>
-                                                                        {item.title}
-                                                                    </h2>
-                                                                    <h4 style={{ color: 'white' }}>{item.assessmentDate} </h4>
-                                                                </Link>
-                                                            </div>
-                                                        ))
-                                                    }
-                                                </div>
                                                 <p>No Announcements</p>
-                                                <h5>Students</h5>
-                                                {
-                                                    this.state.course.students.map(item => (
-                                                        <span>{item}, </span>
-                                                    ))
-                                                }
-                                            </div>
-                                            {/* <div className="col-sm-4 text-center">
 
-                                            </div> */}
+                                            </div>
+
                                         </div>
                                     </div>
                                 </div >
@@ -308,7 +183,7 @@ class CourseDetail extends Component {
                                 </div>
                             </div>
                         </div>
-                        <AssessmentForm currentCourse={this.state.course} />
+                        <AssessmentForm currentAssessment={this.state.assessment} isEditMode={true} />
                     </div >
                 </div >
             </AUX >
@@ -328,4 +203,4 @@ const mapDispatchToProps = (dispatch) => {
     return bindActionCreators({}, dispatch)
 }
 
-export default withRouter(connect(mapStatetoProps, actions)(CourseDetail));
+export default withRouter(connect(mapStatetoProps, actions)(AssessmentDetail));
