@@ -65,6 +65,16 @@ export const addStudent = (studentID, courseUid) => {
                 students: firebase.firestore.FieldValue.arrayUnion(studentID),
             })
 
+            const sutdentQuery = await firestore.collection('users').where('institutionID', '==', studentID).get()
+
+            let resolvedStudent = sutdentQuery.data()
+
+            if(resolvedStudent[0]){
+                await firestore.collection('users').doc(resolvedStudent[0].uid).update({
+                    enrolledCourses: firebase.firestore.FieldValue.arrayUnion(courseUid),
+                })
+            }
+
             dispatch(getCourses())
 
             return true
@@ -78,11 +88,16 @@ export const addStudent = (studentID, courseUid) => {
 export const getCourses = () => {
     return async (dispatch, getState) => {
         try {
-            let { uid } = getState().user
+            let { uid, role, institutionID } = getState().user
 
             let resolvedItems = []
+            let query = {}
 
-            const query = await firestore.collection('courses').where('assessorUid', '==', uid).get()
+            if (role === "Assessor") {
+                query = await firestore.collection('courses').where('assessorUid', '==', uid).get()
+            } else {
+                query = await firestore.collection('courses').where('students', 'array-contains', institutionID).get()
+            }
 
             query.forEach(async (item) => {
                 resolvedItems.push(item.data())

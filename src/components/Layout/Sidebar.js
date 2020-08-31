@@ -81,15 +81,15 @@ class sidebar extends Component {
                                         : null
                                 }
                                 {
-                                    this.props.user.role === 'Assessor' ?
+                                    this.props.user.role === 'Assessor' ||  this.props.user.role === 'Student' ?
                                         <>
                                             <li>
                                                 <Link to="/courses" className={this.state.Tab === 'courses' ? 'waves-effect active-menu' : 'waves-effect'} onClick={this.setActiveTab.bind(this, 'courses', '', '')}><i className="mdi mdi-flag"></i><span>Courses</span></Link>
                                             </li>
 
-                                            <li>
+                                            {/* <li>
                                                 <Link to="/assessments" className={this.state.Tab === 'assessments' ? 'waves-effect active-menu' : 'waves-effect'} onClick={this.setActiveTab.bind(this, 'assessments', '', '')}><i className="mdi mdi-bell"></i><span>Assessments</span></Link>
-                                            </li>
+                                            </li> */}
                                         </> : null
                                 }
 

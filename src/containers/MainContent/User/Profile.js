@@ -44,6 +44,15 @@ class Profile extends Component {
         }
     }
 
+    verifyIdentity = async () => {
+        try {
+
+
+        } catch (e) {
+            console.log(e.message)
+        }
+    }
+
     componentDidMount = async () => {
         try {
 
@@ -105,11 +114,19 @@ class Profile extends Component {
                                                             >Cancel</button>
                                                         </>
                                                         :
-                                                        <button style={{ width: '25%', backgroundColor: '#089BD1' }} className="btn btn-primary waves-effect waves-light"
-                                                            onClick={() => {
-                                                                this.setState({ isEditMode: true })
-                                                            }}
-                                                        >Edit Profile</button>
+                                                        <>
+                                                            {
+                                                                this.state.user.role === 'Student' ?
+                                                                    <button style={{ width: '25%', backgroundColor: '#089BD1' }} className="btn btn-success waves-effect waves-light"
+                                                                        onClick={() => {
+                                                                            this.setState({ isEditMode: true })
+                                                                        }}
+                                                                    >Verify Your Identity</button> : null
+                                                            }
+                                                            <button style={{ width: '25%', backgroundColor: '#089BD1', marginLeft: 5, }} className="btn btn-primary waves-effect waves-light"
+                                                                onClick={this.verifyIdentity}
+                                                            >Edit Profile</button>
+                                                        </>
                                                 }
 
                                             </div>

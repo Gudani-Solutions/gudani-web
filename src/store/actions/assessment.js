@@ -53,18 +53,27 @@ export const editAssessment = (formData) => {
 export const getAssessments = () => {
     return async (dispatch, getState) => {
         try {
-            let { uid } = getState().user
+            let { uid, enrolledCourses, role } = getState().user
 
             let resolvedItems = []
+            let query = {}
 
-            const query = await firestore.collection('assessments').where('assessorUid', '==', uid).get()
+            if (role === 'Assessor') {
+                query = await firestore.collection('assessments').where('assessorUid', '==', uid).get()
+            }
+            else if (role === 'Student') {
+                enrolledCourses.forEach(async item => {
+                    query = await firestore.collection('assessments').where('courseUid', '==', item).get()
+                })
+            }
 
-            query.forEach(async (item) => {
-                resolvedItems.push(item.data())
-            })
+            if (query) {
+                query.forEach(async (item) => {
+                    resolvedItems.push(item.data())
+                })
 
-            dispatch({ type: 'UPDATE_ASSESSMENTS', payload: orderBy(resolvedItems, 'date', 'desc') })
-
+                dispatch({ type: 'UPDATE_ASSESSMENTS', payload: orderBy(resolvedItems, 'date', 'desc') })
+            }
         } catch (e) {
             console.log(e.message)
         }

@@ -54,7 +54,7 @@ class mainbuilder extends Component {
                             <Route path="/data" component={DataManagement} /> : null
                     }
                     {
-                        this.props.user.role === 'Assessor' ?
+                        this.props.user.role === 'Assessor' ||  this.props.user.role === 'Student' ?
                             <>
                             <Route exact path="/assessmentdetail" component={AssessmentDetail} />
                                 <Route exact path="/coursedetail" component={CourseDetail} />

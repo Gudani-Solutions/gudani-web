@@ -74,6 +74,7 @@
     "react-sparklines": "^1.7.0",
     "react-transform-hmr": "^1.0.4",
     "react-web-gifted-chat": "^0.6.7",
+    "react-webcam": "^5.2.0",
     "react-wizard-form": "^1.2.11",
     "react-x-editable": "0.0.10-beta",
     "reactstrap": "^7.1.0",

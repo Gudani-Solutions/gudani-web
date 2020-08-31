@@ -103,8 +103,6 @@ class CourseDetail extends Component {
                 this.setState({ student_err: 'Required Field' });
             if (this.state.student) {
                 await this.props.addStudent(this.state.student, this.state.course.uid)
-                // let updatedStudents = this.state.course.students.push(this.state.student)
-                // console.log(updatedStudents)
                 this.setState({ student: '' })
             }
 
@@ -155,21 +153,26 @@ class CourseDetail extends Component {
                                                 <h3>{this.state.course.code} - {this.state.course.title}</h3>
                                             </div>
                                             <div className="col-sm-7 text-right">
-                                                <button data-toggle="modal" data-target="#assessmentModal" style={{ width: '20%', backgroundColor: '#089BD1', marginLeft: 5, marginRight: 5 }} className="btn btn-primary waves-effect waves-light"
-                                                    onClick={() => {
+                                                {
+                                                    this.props.user.role === 'Assessor' ?
+                                                        <>
+                                                            <button data-toggle="modal" data-target="#assessmentModal" style={{ width: '20%', backgroundColor: '#089BD1', marginLeft: 5, marginRight: 5 }} className="btn btn-primary waves-effect waves-light"
+                                                                onClick={() => {
 
-                                                    }}
-                                                >Add Assessment</button>
-                                                <button data-toggle="modal" data-target="#studentModal" style={{ width: '20%', backgroundColor: '#089BD1', marginLeft: 5, marginRight: 5 }} className="btn btn-primary waves-effect waves-light"
-                                                    onClick={() => {
+                                                                }}
+                                                            >Add Assessment</button>
+                                                            <button data-toggle="modal" data-target="#studentModal" style={{ width: '20%', backgroundColor: '#089BD1', marginLeft: 5, marginRight: 5 }} className="btn btn-primary waves-effect waves-light"
+                                                                onClick={() => {
 
-                                                    }}
-                                                >Add Student</button>
-                                                <button data-toggle="modal" data-target="#courseModal" style={{ width: '20%', backgroundColor: '#089BD1', marginLeft: 5, marginRight: 5 }} className="btn btn-primary waves-effect waves-light"
-                                                    onClick={() => {
+                                                                }}
+                                                            >Add Student</button>
+                                                            <button data-toggle="modal" data-target="#courseModal" style={{ width: '20%', backgroundColor: '#089BD1', marginLeft: 5, marginRight: 5 }} className="btn btn-primary waves-effect waves-light"
+                                                                onClick={() => {
 
-                                                    }}
-                                                >Edit Course</button>
+                                                                }}>Edit Course</button>
+                                                        </>
+                                                        : null
+                                                }
                                                 <button style={{ width: '20%', backgroundColor: '#089BD1', marginLeft: 5, marginRight: 5 }} className="btn btn-primary waves-effect waves-light"
                                                     onClick={() => {
                                                         this.props.history.push('/courses')

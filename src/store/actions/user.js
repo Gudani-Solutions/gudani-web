@@ -10,7 +10,7 @@ export const register = (formData) => {
             const response = await firebase.auth().createUserWithEmailAndPassword(formData.email, formData.pwd)
 
             if (response && response.user.uid) {
-                const newUser = {
+                var newUser = {
                     uid: response.user.uid,
                     photo: '',
                     courses: [],
@@ -23,11 +23,21 @@ export const register = (formData) => {
                     role: formData.role,
                     institution: formData.institution,
                     institutionID: formData.institutionID,
-                    department: formData.department
+                    department: formData.department, 
+                    enrolledCourses: []
+                }
+
+                if (newUser.role === 'Student') {
+                    const query = await firestore.collection('courses').where('students', 'array-contains', newUser.institutionID).get()
+                    query.forEach(async (item) => {
+                        let course = item.data()
+                        newUser.enrolledCourses.push(course.uid)
+                    })
                 }
 
                 await firestore.collection('users').doc(newUser.uid).set(newUser)
                 dispatch({ type: 'UPDATE_USER', payload: newUser })
+
             } else {
 
                 // something went wrong

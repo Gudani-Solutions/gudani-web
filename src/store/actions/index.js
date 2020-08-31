@@ -14,7 +14,7 @@ export const sync = () => {
             if (user.role === 'Admin') {
                 await dispatch(getCoursesData())
             }
-            if (user.role === 'Assessor') {
+            if (user.role === 'Assessor' || user.role === 'Student' ) {
                 await dispatch(getCourses())
                 await dispatch(getAssessments())
             }
