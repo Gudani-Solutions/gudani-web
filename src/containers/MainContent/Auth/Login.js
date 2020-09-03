@@ -12,11 +12,18 @@ class Login extends Component {
         pwd: '',
         pwd_err: '',
         userMessage: 'Sign in to continue to Gudani',
-        loginError: false
+        loginError: false,
+        isChecked: false,
     }
 
     componentDidMount() {
-        
+        if (localStorage.checkbox && localStorage.email !== "") {
+            this.setState({
+                isChecked: true,
+                email: localStorage.email,
+                pwd: localStorage.pwd
+            })
+        }
     }
 
     handleChangeEmail = (e) => {
@@ -38,6 +45,12 @@ class Login extends Component {
             this.setState({ pwd_err: '' });
     }
 
+    handleChangeCheckbox = (e) => {
+        this.setState({
+            isChecked: e.target.checked
+        })
+    }
+
 
     handleSubmit = async (e) => {
         try {
@@ -47,6 +60,12 @@ class Login extends Component {
                 this.setState({ email_err: 'Required Field' });
             if (this.state.pwd === '')
                 this.setState({ pwd_err: 'Required Field' });
+
+            if (this.state.isChecked) {
+                localStorage.email = this.state.email
+                localStorage.pwd = this.state.pwd
+                localStorage.checkbox = this.state.isChecked
+            }
 
             if (await this.props.login(this.state)) {
                 this.setState({ userMessage: 'Sign in to continue to Gudani', loginError: false });
@@ -90,6 +109,13 @@ class Login extends Component {
                                         <div>
                                             <input style={{ borderColor: this.state.pwd_err ? 'red' : null }} type="password" value={this.state.pwd} onChange={this.handleChangePwd} className="form-control" placeholder="Password" />
                                             <span style={{ color: 'red' }} id="err">{this.state.pwd_err}</span>
+                                        </div>
+                                    </div>
+
+                                    <div className="form-group">
+                                        <div className="custom-control custom-checkbox">
+                                            <input checked={this.state.isChecked} name="lsRememberMe" onChange={this.handleChangeCheckbox} type="checkbox" className="custom-control-input" id="customControlInline" />
+                                            <label className="custom-control-label" for="customControlInline">Remember me</label>
                                         </div>
                                     </div>
 

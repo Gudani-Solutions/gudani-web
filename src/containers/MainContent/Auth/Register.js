@@ -50,13 +50,47 @@ class Register extends Component {
             this.setState({ lastname_err: '' });
     }
 
+    checkIsInstitutionalEmail = (email) => {
+        if (this.state.institution === 'University of Cape Town') {
+            if (email.includes("uct")) {
+                this.setState({ email_err: '' });
+            } else {
+                this.setState({ email_err: 'This email address is not registered with ' + this.state.institution });
+            }
+        }
+        else if (this.state.institution === 'University of the Witwatersrand') {
+            if (email.includes("wits")) {
+                this.setState({ email_err: '' });
+            } else {
+                this.setState({ email_err: 'This email address is not registered with ' + this.state.institution });
+            }
+        }
+        else if (this.state.institution === 'University of Johannesburg') {
+            if (email.includes("uj")) {
+                this.setState({ email_err: '' });
+            } else {
+                this.setState({ email_err: 'This email address is not registered with ' + this.state.institution });
+            }
+        }
+        else if (this.state.institution === 'Univeristy of Mpumalanga') {
+            if (email.includes("ump")) {
+                this.setState({ email_err: '' });
+            } else {
+                this.setState({ email_err: 'This email address is not registered with ' + this.state.institution });
+            }
+        }
+    }
+
+
     handleChangeEmail = (e) => {
         this.setState({ email: e.target.value });
         var EmailReg = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
         if (e.target.value == '')
             this.setState({ email_err: 'Required Field' });
-        else if (EmailReg.test(e.target.value))
+        else if (EmailReg.test(e.target.value)) {
             this.setState({ email_err: '' });
+            this.checkIsInstitutionalEmail(e.target.value)
+        }
         else
             this.setState({ email_err: 'Enter Valid Email' });
     }
@@ -186,14 +220,6 @@ class Register extends Component {
                                     </div>
 
                                     <div className="form-group">
-                                        <label>E-Mail</label>
-                                        <div>
-                                            <input style={{ borderColor: this.state.email_err ? 'red' : null }} type="text" value={this.state.email} onChange={this.handleChangeEmail} className="form-control" placeholder="Enter a valid e-mail" />
-                                            <span style={{ color: 'red' }} id="err">{this.state.email_err}</span>
-                                        </div>
-                                    </div>
-
-                                    <div className="form-group">
                                         <label for="instId">Institution</label>
                                         <select style={{ borderColor: this.state.institution_err ? 'red' : null }} value={this.state.institution} onChange={this.handleChangeInstitution} className="form-control">
                                             <option>Select</option>
@@ -221,6 +247,15 @@ class Register extends Component {
                                             <option>University of Fort Hare</option>
                                         </select>
                                         <span style={{ color: 'red' }} id="err">{this.state.institution_err}</span>
+                                    </div>
+
+
+                                    <div className="form-group">
+                                        <label>E-Mail</label>
+                                        <div>
+                                            <input style={{ borderColor: this.state.email_err ? 'red' : null }} type="text" value={this.state.email} onChange={this.handleChangeEmail} className="form-control" placeholder="Enter a valid e-mail" />
+                                            <span style={{ color: 'red' }} id="err">{this.state.email_err}</span>
+                                        </div>
                                     </div>
 
                                     <div className="form-group">
