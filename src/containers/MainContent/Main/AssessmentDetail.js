@@ -12,6 +12,7 @@ class AssessmentDetail extends Component {
     state = {
         isEditMode: false,
         assessment: {
+            uid: '',
             title: '',
             startDate: '',
             startTime: '',
@@ -25,7 +26,10 @@ class AssessmentDetail extends Component {
     componentWillMount = async () => {
         try {
             let assessment = await this.props.assessement.assessments.find(c => c.uid === this.props.location.state.uid)
-            this.setState({ assessment })
+            if (assessment.uid) {
+                this.setState({ assessment })
+            }
+            console.log(this.state.assessment)
         } catch (e) {
             console.log(e.message)
         }
@@ -77,7 +81,19 @@ class AssessmentDetail extends Component {
 
                                             </div>
 
+
+
                                         </div>
+                                        <Link style={{ width: '100%' }} to={{
+                                            pathname: "/session",
+                                            state: {
+                                                uid: this.props.location.state.uid
+                                            }
+                                        }} className="btn btn-success waves-effect waves-light">
+                                            <h2 style={{ color: 'white' }}>
+                                                Enter Assessement
+                                                </h2>
+                                        </Link>
                                     </div>
                                 </div >
                             </div >

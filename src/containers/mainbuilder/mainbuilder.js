@@ -17,6 +17,7 @@ import Courses from '../MainContent/Main/Courses.js';
 import CourseDetail from '../MainContent/Main/CourseDetail.js';
 import Assessments from '../MainContent/Main/Assessments.js';
 import AssessmentDetail from '../MainContent/Main/AssessmentDetail.js';
+import Session from '../MainContent/Main/Session.js';
 
 
 import DataManagement from '../MainContent/Main/DataManagement.js';
@@ -57,6 +58,7 @@ class mainbuilder extends Component {
                         this.props.user.role === 'Assessor' ||  this.props.user.role === 'Student' ?
                             <>
                             <Route exact path="/assessmentdetail" component={AssessmentDetail} />
+                            <Route exact path="/session" component={Session} />
                                 <Route exact path="/coursedetail" component={CourseDetail} />
                                 <Route path="/courses" component={Courses} />
                                 <Route path="/assessments" component={Assessments} />
