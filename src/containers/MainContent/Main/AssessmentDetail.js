@@ -91,7 +91,7 @@ class AssessmentDetail extends Component {
                                             }
                                         }} className="btn btn-success waves-effect waves-light">
                                             <h2 style={{ color: 'white' }}>
-                                                Enter Assessement
+                                                Start Assessement
                                                 </h2>
                                         </Link>
                                     </div>

@@ -176,7 +176,7 @@ class Session extends Component {
                                             <button onClick={() => this.exit()} style={{ width: '100%' }}
                                                 className="btn btn-danger waves-effect waves-light">
                                                 <h2 style={{ color: 'white' }}>
-                                                    Exit Assessment
+                                                    Stop Assessment
                                                 </h2>
                                             </button>
                                             :
@@ -191,7 +191,7 @@ class Session extends Component {
                                                 <button onClick={() => this.exit()} style={{ width: '100%' }}
                                                     className="btn btn-success waves-effect waves-light">
                                                     <h2 style={{ color: 'white' }}>
-                                                        Go Back
+                                                        Exit Assessement
                                                 </h2>
                                                 </button>}
 
