@@ -54,9 +54,8 @@ class Session extends Component {
                 video.play()
                 this.recorder = new RecordRTC(stream, {
                     type: 'video',
-                    MimeType: 'video/mp4',
+                    mimeType: 'video/mp4',
                     recorderType: MediaStreamRecorder,
-                    checkForInactiveTracks: false,
                 });
                 this.recorder.startRecording();
             }
@@ -93,10 +92,6 @@ class Session extends Component {
                 var track = tracks[i];
                 track.stop();
             }
-
-            // video.srcObject = null;
-
-
         } catch (e) {
             console.log(e.message)
         }
