@@ -55,7 +55,7 @@ class Session extends Component {
                 this.recorder = new RecordRTC(stream, {
                     type: 'video',
                     mimeType: 'video/mp4',
-                    recorderType: MediaStreamRecorder,
+                    timeSlice: 1000
                 });
                 this.recorder.startRecording();
             }
@@ -192,7 +192,7 @@ class Session extends Component {
 
                                         {
                                             this.state.sessionState === 'active' ?
-                                                <video className="mb-1" id="video" width={"100%"} style={{}} height={700} id="video" controls="controls" crossOrigin="anonymous" />
+                                                <video className="mb-1" id="video" width={"100%"} style={{}} height={700} id="video" muted crossOrigin="anonymous" />
                                                 :
                                                 <div className="m-3">
                                                     <h4 className="mt-0 header-title text-center">{this.state.percentUploaded + '%'}</h4>
