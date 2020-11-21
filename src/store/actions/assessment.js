@@ -1,12 +1,12 @@
-import { firestore } from '../../config/firebase'
+import {firestore} from '../../config/firebase'
 import firebase from 'firebase'
-import { orderBy } from 'lodash'
+import {orderBy} from 'lodash'
 import uuid from 'uuid'
 
 export const createAssessment = (formData, courseUid) => {
     return async (dispatch, getState) => {
         try {
-            let { user } = getState()
+            let {user} = getState()
 
             const newItem = {
                 uid: uuid.v4(),
@@ -53,27 +53,26 @@ export const editAssessment = (formData) => {
 export const getAssessments = () => {
     return async (dispatch, getState) => {
         try {
-            let { uid, enrolledCourses, role } = getState().user
+            let {uid, courses, role} = getState().user
 
             let resolvedItems = []
             let query = {}
 
             if (role === 'Assessor') {
                 query = await firestore.collection('assessments').where('assessorUid', '==', uid).get()
-            }
-            else if (role === 'Student') {
-                enrolledCourses.forEach(async item => {
-                    query = await firestore.collection('assessments').where('courseUid', '==', item).get()
+            } else if (role === 'Student') {
+                courses.forEach(async item => {
+                    query = await firestore.collection('assessments').where('courseUid', '==', item.uid).get()
+
+                    if (query) {
+                        query.forEach(async (item) => {
+                            resolvedItems.push(item.data())
+                        })
+                    }
+                    dispatch({type: 'UPDATE_ASSESSMENTS', payload: orderBy(resolvedItems, 'date', 'desc')})
                 })
             }
 
-            if (query) {
-                query.forEach(async (item) => {
-                    resolvedItems.push(item.data())
-                })
-
-                dispatch({ type: 'UPDATE_ASSESSMENTS', payload: orderBy(resolvedItems, 'date', 'desc') })
-            }
         } catch (e) {
             console.log(e.message)
         }

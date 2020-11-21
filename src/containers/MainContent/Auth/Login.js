@@ -51,7 +51,6 @@ class Login extends Component {
         })
     }
 
-
     handleSubmit = async (e) => {
         try {
             e.preventDefault()
@@ -68,7 +67,9 @@ class Login extends Component {
             }
 
             if (await this.props.login(this.state)) {
-                this.setState({ userMessage: 'Sign in to continue to Gudani', loginError: false });
+                this.setState({ userMessage: 'Sign in successful', loginError: false });
+                // Temp fix for courses not loading on successful login
+                window.location.reload()
             } else {
                 this.setState({ userMessage: 'Login failed. Please try again', loginError: true });
             }

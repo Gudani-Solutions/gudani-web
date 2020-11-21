@@ -12,17 +12,19 @@ let initialState = {
     assessments: [],
     isVerified: false,
     isAuthenticated: false,
-    token: '',
-}
+    token: ''
+};
 
 export default (state = initialState, action) => {
     switch (action.type) {
         case 'UPDATE_COURSES':
-            return { ...state, courses: action.payload }
+            return { ...state, courses: action.payload };
         case 'UPDATE_ASSESSMENTS':
-            return { ...state, assessments: action.payload }
+            return { ...state, assessments: action.payload };
         case 'UPDATE_USER':
-            return action.payload
+            return action.payload;
+        case 'LOGOUT':
+            return {};
         default:
             return state
     }

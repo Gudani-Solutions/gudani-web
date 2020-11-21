@@ -83,22 +83,7 @@ export const signOut = (formData) => {
         try {
             await firebase.auth().signOut()
 
-            dispatch({
-                type: 'UPDATE_USER', payload: {
-                    uid: '',
-                    firstname: '',
-                    lastname: '',
-                    email: '',
-                    role: '',
-                    photo: '',
-                    univerisity: '',
-                    courses: [],
-                    assessments: [],
-                    isVerified: false,
-                    isAuthenticated: false,
-                    token: '',
-                }
-            })
+            dispatch({ type: 'LOGOUT', payload: {}})
 
         } catch (e) {
             console.log(e.message)

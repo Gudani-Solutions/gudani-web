@@ -9,13 +9,13 @@ export const sync = () => {
     return async (dispatch, getState) => {
         try {
 
-            let { user } = getState()
+            let { user } = getState();
 
             if (user.role === 'Admin') {
                 await dispatch(getCoursesData())
             }
             if (user.role === 'Assessor' || user.role === 'Student' ) {
-                await dispatch(getCourses())
+                await dispatch(getCourses());
                 await dispatch(getAssessments())
             }
 

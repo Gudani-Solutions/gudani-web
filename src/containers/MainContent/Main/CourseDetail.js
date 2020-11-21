@@ -15,7 +15,6 @@ class CourseDetail extends Component {
             title: '',
             students: [],
             department: '',
-            title: '',
             code: '',
             description: '',
             photo: ''
